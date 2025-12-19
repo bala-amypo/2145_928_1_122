@@ -1,10 +1,15 @@
 package com.example.demo.repository;
 
 import java.util.*;
+
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.entity.DiscountCode;
 
+@Repository
 public class DiscountCodeRepository {
-    Map<Long, DiscountCode> map = new HashMap<>();
+
+    private Map<Long, DiscountCode> map = new HashMap<>();
 
     public DiscountCode save(DiscountCode d) {
         map.put(d.getId(), d);
@@ -13,15 +18,6 @@ public class DiscountCodeRepository {
 
     public Optional<DiscountCode> findById(Long id) {
         return Optional.ofNullable(map.get(id));
-    }
-
-    public Optional<DiscountCode> findByCode(String code) {
-        for (DiscountCode d : map.values()) {
-            if (d.getCode().equals(code)) {
-                return Optional.of(d);
-            }
-        }
-        return Optional.empty();
     }
 
     public List<DiscountCode> findAll() {

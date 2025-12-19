@@ -1,10 +1,15 @@
 package com.example.demo.repository;
 
 import java.util.*;
+
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.entity.RoiReport;
 
+@Repository
 public class RoiReportRepository {
-    Map<Long, RoiReport> map = new HashMap<>();
+
+    private Map<Long, RoiReport> map = new HashMap<>();
 
     public RoiReport save(RoiReport r) {
         map.put(r.getId(), r);
@@ -13,9 +18,5 @@ public class RoiReportRepository {
 
     public Optional<RoiReport> findById(Long id) {
         return Optional.ofNullable(map.get(id));
-    }
-
-    public List<RoiReport> findByCampaign_Id(Long campaignId) {
-        return new ArrayList<>(map.values());
     }
 }

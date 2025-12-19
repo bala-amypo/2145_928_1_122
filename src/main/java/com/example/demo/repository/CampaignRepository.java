@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Campaign;
 
-@Repository   // ✅ REQUIRED
+@Repository   // ✅ VERY IMPORTANT
 public class CampaignRepository {
 
     private Map<Long, Campaign> map = new HashMap<>();
