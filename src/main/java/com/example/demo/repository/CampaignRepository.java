@@ -1,10 +1,19 @@
 package com.example.demo.repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.entity.Campaign;
 
+@Repository   // ✅ REQUIRED
 public class CampaignRepository {
-    Map<Long, Campaign> map = new HashMap<>();
+
+    private Map<Long, Campaign> map = new HashMap<>();
 
     public Campaign save(Campaign c) {
         map.put(c.getId(), c);
