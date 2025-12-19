@@ -1,23 +1,38 @@
 package com.example.demo.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.exception.DuplicateResourceException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository repo;
+    @Override
+    public String registerUser(RegisterRequest request) {
 
-    public User insertUser(User u) {
-        return repo.save(u);
+        // example duplicate check
+        if ("admin@gmail.com".equals(request.getEmail())) {
+            throw new DuplicateResourceException("Email already exists");
+        }
+
+        return "User registered successfully";
     }
 
-    public User getUserByEmail(String email) {
-        return repo.findByEmail(email).orElse(null);
+    @Override
+    public String login(LoginRequest request) {
+
+        if (!"admin@gmail.com".equals(request.getEmail())) {
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        if (!"admin".equals(request.getPassword())) {
+            throw new ResourceNotFoundException("Invalid password");
+        }
+
+        return "Login successful";
     }
 }
