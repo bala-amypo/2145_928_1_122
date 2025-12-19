@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,11 +20,11 @@ public class RoiReportRepository {
         return r;
     }
 
-    public RoiReport findById(Long id) {
-        return map.get(id);
+    // ✅ FIXED
+    public Optional<RoiReport> findById(Long id) {
+        return Optional.ofNullable(map.get(id));
     }
 
-    // ✅ REQUIRED BY RoiServiceImpl
     public List<RoiReport> findByCampaign_Id(Long campaignId) {
         List<RoiReport> list = new ArrayList<>();
         for (RoiReport r : map.values()) {
