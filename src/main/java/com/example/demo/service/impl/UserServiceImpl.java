@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.User;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserRepository;
@@ -17,6 +18,22 @@ public class UserServiceImpl implements UserService {
         this.repo = repo;
     }
 
+    // ✅ REQUIRED: registerUser implementation
+    @Override
+    public String registerUser(RegisterRequest request) {
+
+        User user = new User();
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
+
+        repo.save(user);
+
+        return "User registered successfully";
+    }
+
+    // ✅ login implementation
     @Override
     public String login(LoginRequest request) {
 
