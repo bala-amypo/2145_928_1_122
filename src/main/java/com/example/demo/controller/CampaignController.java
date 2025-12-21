@@ -1,5 +1,3 @@
-
-
 package com.example.demo.controller;
 
 import java.util.List;
@@ -9,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Campaign;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.service.CampaignService;
 
 @RestController
@@ -24,6 +23,7 @@ public class CampaignController {
     @PostMapping("/add")
     public ResponseEntity<Campaign> add(
             @Valid @RequestBody Campaign c) {
+
         return ResponseEntity.ok(service.insertCampaign(c));
     }
 
@@ -34,12 +34,16 @@ public class CampaignController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Campaign> get(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getCampaignById(id)
-                .orElseThrow(() -> new RuntimeException("Campaign not found")));
+
+        Campaign campaign = service.getCampaignById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Campaign not found"));
+
+        return ResponseEntity.ok(campaign);
     }
 
     @PutMapping("/deactivate/{id}")
     public ResponseEntity<String> deactivate(@PathVariable Long id) {
+
         service.deactivateCampaign(id);
         return ResponseEntity.ok("Campaign deactivated");
     }

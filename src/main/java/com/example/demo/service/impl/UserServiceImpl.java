@@ -18,20 +18,23 @@ public class UserServiceImpl implements UserService {
         this.repo = repo;
     }
 
-    // ✅ REQUIRED: registerUser implementation
-    @Override
-    public String registerUser(RegisterRequest request) {
+@Override
+public String registerUser(RegisterRequest request) {
 
-        User user = new User();
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
-
-        repo.save(user);
-
-        return "User registered successfully";
+    if (repo.findByEmail(request.getEmail()).isPresent()) {
+        throw new DuplicateResourceException("Email already exists");
     }
+
+    User user = new User();
+    user.setFullName(request.getFullName());
+    user.setEmail(request.getEmail());
+    user.setPassword(request.getPassword());
+    user.setRole(request.getRole());
+
+    repo.save(user);
+
+    return "User registered successfully";
+}
 
     // ✅ login implementation
     @Override
