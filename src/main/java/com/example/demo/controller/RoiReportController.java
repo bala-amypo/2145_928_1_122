@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.RoiReport;
@@ -13,21 +13,27 @@ import com.example.demo.service.RoiService;
 @RequestMapping("/api/roi")
 public class RoiReportController {
 
-    @Autowired
-    RoiService service;
+    private final RoiService service;
+
+    public RoiReportController(RoiService service) {
+        this.service = service;
+    }
 
     @PostMapping("/add")
-    public RoiReport add(@RequestBody RoiReport r) {
-        return service.insertReport(r);
+    public ResponseEntity<RoiReport> add(
+            @Valid @RequestBody RoiReport r) {
+        return ResponseEntity.ok(service.insertReport(r));
     }
 
     @GetMapping("/get/{id}")
-    public Optional<RoiReport> get(@PathVariable Long id) {
-        return service.getReportById(id);
+    public ResponseEntity<RoiReport> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getReportById(id)
+                .orElseThrow(() -> new RuntimeException("ROI report not found")));
     }
 
     @GetMapping("/campaign/{campaignId}")
-    public List<RoiReport> getByCampaign(@PathVariable Long campaignId) {
-        return service.getReportsByCampaign(campaignId);
+    public ResponseEntity<List<RoiReport>> getByCampaign(
+            @PathVariable Long campaignId) {
+        return ResponseEntity.ok(service.getReportsByCampaign(campaignId));
     }
 }

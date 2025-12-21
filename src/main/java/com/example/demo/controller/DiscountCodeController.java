@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.DiscountCode;
@@ -13,27 +13,32 @@ import com.example.demo.service.DiscountCodeService;
 @RequestMapping("/api/discount-codes")
 public class DiscountCodeController {
 
-    @Autowired
-    DiscountCodeService service;
+    private final DiscountCodeService service;
+
+    public DiscountCodeController(DiscountCodeService service) {
+        this.service = service;
+    }
 
     @PostMapping("/add")
-    public DiscountCode add(@RequestBody DiscountCode d) {
-        return service.insertCode(d);
+    public ResponseEntity<DiscountCode> add(
+            @Valid @RequestBody DiscountCode d) {
+        return ResponseEntity.ok(service.insertCode(d));
     }
 
     @GetMapping("/getAll")
-    public List<DiscountCode> getAll() {
-        return service.getAllCodes();
+    public ResponseEntity<List<DiscountCode>> getAll() {
+        return ResponseEntity.ok(service.getAllCodes());
     }
 
     @GetMapping("/get/{id}")
-    public Optional<DiscountCode> get(@PathVariable Long id) {
-        return service.getCodeById(id);
+    public ResponseEntity<DiscountCode> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getCodeById(id)
+                .orElseThrow(() -> new RuntimeException("Discount code not found")));
     }
 
     @PutMapping("/deactivate/{id}")
-    public String deactivate(@PathVariable Long id) {
+    public ResponseEntity<String> deactivate(@PathVariable Long id) {
         service.deactivateCode(id);
-        return "Deactivated";
+        return ResponseEntity.ok("Discount code deactivated");
     }
 }

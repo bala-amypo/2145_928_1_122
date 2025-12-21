@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Influencer;
@@ -13,27 +13,32 @@ import com.example.demo.service.InfluencerService;
 @RequestMapping("/api/influencers")
 public class InfluencerController {
 
-    @Autowired
-    InfluencerService service;
+    private final InfluencerService service;
+
+    public InfluencerController(InfluencerService service) {
+        this.service = service;
+    }
 
     @PostMapping("/add")
-    public Influencer add(@RequestBody Influencer i) {
-        return service.insertInfluencer(i);
+    public ResponseEntity<Influencer> add(
+            @Valid @RequestBody Influencer i) {
+        return ResponseEntity.ok(service.insertInfluencer(i));
     }
 
     @GetMapping("/getAll")
-    public List<Influencer> getAll() {
-        return service.getAllInfluencers();
+    public ResponseEntity<List<Influencer>> getAll() {
+        return ResponseEntity.ok(service.getAllInfluencers());
     }
 
     @GetMapping("/get/{id}")
-    public Optional<Influencer> get(@PathVariable Long id) {
-        return service.getInfluencerById(id);
+    public ResponseEntity<Influencer> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getInfluencerById(id)
+                .orElseThrow(() -> new RuntimeException("Influencer not found")));
     }
 
     @PutMapping("/deactivate/{id}")
-    public String deactivate(@PathVariable Long id) {
+    public ResponseEntity<String> deactivate(@PathVariable Long id) {
         service.deactivateInfluencer(id);
-        return "Deactivated";
+        return ResponseEntity.ok("Influencer deactivated");
     }
 }

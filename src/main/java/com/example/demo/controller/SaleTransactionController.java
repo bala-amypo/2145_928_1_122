@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.SaleTransaction;
@@ -13,21 +13,27 @@ import com.example.demo.service.SaleTransactionService;
 @RequestMapping("/api/sales")
 public class SaleTransactionController {
 
-    @Autowired
-    SaleTransactionService service;
+    private final SaleTransactionService service;
+
+    public SaleTransactionController(SaleTransactionService service) {
+        this.service = service;
+    }
 
     @PostMapping("/add")
-    public SaleTransaction add(@RequestBody SaleTransaction s) {
-        return service.insertSale(s);
+    public ResponseEntity<SaleTransaction> add(
+            @Valid @RequestBody SaleTransaction s) {
+        return ResponseEntity.ok(service.insertSale(s));
     }
 
     @GetMapping("/get/{id}")
-    public Optional<SaleTransaction> get(@PathVariable Long id) {
-        return service.getSaleById(id);
+    public ResponseEntity<SaleTransaction> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getSaleById(id)
+                .orElseThrow(() -> new RuntimeException("Sale not found")));
     }
 
     @GetMapping("/code/{codeId}")
-    public List<SaleTransaction> getByCode(@PathVariable Long codeId) {
-        return service.getSalesByCode(codeId);
+    public ResponseEntity<List<SaleTransaction>> getByCode(
+            @PathVariable Long codeId) {
+        return ResponseEntity.ok(service.getSalesByCode(codeId));
     }
 }

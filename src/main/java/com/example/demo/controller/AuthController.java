@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.LoginRequest;
@@ -18,12 +19,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @RequestBody RegisterRequest request) {
-        return service.registerUser(request);
+    public ResponseEntity<String> register(
+            @Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(service.registerUser(request));
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest request) {
-        return service.login(request);
+    public ResponseEntity<String> login(
+            @Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(service.login(request));
     }
 }
