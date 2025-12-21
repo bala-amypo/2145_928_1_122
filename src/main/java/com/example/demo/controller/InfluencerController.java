@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Influencer;
 import com.example.demo.service.InfluencerService;
+//kill -9 132088
 
 @RestController
 @RequestMapping("/api/influencers")
