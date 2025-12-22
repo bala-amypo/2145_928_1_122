@@ -18,18 +18,5 @@ public class SaleTransaction {
     @JoinColumn(name = "discount_code_id")
     private DiscountCode discountCode;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public BigDecimal getSaleAmount() { return saleAmount; }
-    public void setSaleAmount(BigDecimal saleAmount) {
-        this.saleAmount = saleAmount;
-    }
-
-    public Timestamp getTransactionDate() { return transactionDate; }
-
-    public DiscountCode getDiscountCode() { return discountCode; }
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
-    }
+    // getters & setters
 }

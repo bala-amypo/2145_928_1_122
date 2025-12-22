@@ -22,27 +22,5 @@ public class RoiReport {
     @ManyToOne
     private Influencer influencer;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public BigDecimal getTotalSales() { return totalSales; }
-    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
-
-    public BigDecimal getTotalRevenue() { return totalRevenue; }
-    public void setTotalRevenue(BigDecimal totalRevenue) {
-        this.totalRevenue = totalRevenue;
-    }
-
-    public BigDecimal getRoiPercentage() { return roiPercentage; }
-    public void setRoiPercentage(BigDecimal roiPercentage) {
-        this.roiPercentage = roiPercentage;
-    }
-
-    public Campaign getCampaign() { return campaign; }
-    public void setCampaign(Campaign campaign) { this.campaign = campaign; }
-
-    public Influencer getInfluencer() { return influencer; }
-    public void setInfluencer(Influencer influencer) {
-        this.influencer = influencer;
-    }
+    // getters & setters
 }
