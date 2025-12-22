@@ -1,17 +1,25 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+@Entity
 public class Campaign {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String campaignName;
     private Date startDate;
     private Date endDate;
     private BigDecimal budget;
     private Boolean active = true;
 
-    public Campaign() {}
+    @OneToMany(mappedBy = "campaign")
+    private List<DiscountCode> discountCodes;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
