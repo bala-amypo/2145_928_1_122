@@ -1,26 +1,17 @@
 package com.example.demo.repository;
 
-import java.util.*;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.DiscountCode;
 
 @Repository
-public class DiscountCodeRepository {
+public interface DiscountCodeRepository
+        extends JpaRepository<DiscountCode, Long> {
 
-    private Map<Long, DiscountCode> map = new HashMap<>();
+    List<DiscountCode> findByCampaignId(Long campaignId);
 
-    public DiscountCode save(DiscountCode d) {
-        map.put(d.getId(), d);
-        return d;
-    }
-
-    public Optional<DiscountCode> findById(Long id) {
-        return Optional.ofNullable(map.get(id));
-    }
-
-    public List<DiscountCode> findAll() {
-        return new ArrayList<>(map.values());
-    }
+    List<DiscountCode> findByInfluencerId(Long influencerId);
 }

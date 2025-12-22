@@ -1,38 +1,17 @@
 package com.example.demo.repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.RoiReport;
 
 @Repository
-public class RoiReportRepository {
+public interface RoiReportRepository
+        extends JpaRepository<RoiReport, Long> {
 
-    private Map<Long, RoiReport> map = new HashMap<>();
+    List<RoiReport> findByCampaignId(Long campaignId);
 
-    public RoiReport save(RoiReport r) {
-        map.put(r.getId(), r);
-        return r;
-    }
-
-    // ✅ FIXED
-    public Optional<RoiReport> findById(Long id) {
-        return Optional.ofNullable(map.get(id));
-    }
-
-    public List<RoiReport> findByCampaign_Id(Long campaignId) {
-        List<RoiReport> list = new ArrayList<>();
-        for (RoiReport r : map.values()) {
-            if (r.getCampaign() != null &&
-                r.getCampaign().getId().equals(campaignId)) {
-                list.add(r);
-            }
-        }
-        return list;
-    }
+    List<RoiReport> findByInfluencerId(Long influencerId);
 }
