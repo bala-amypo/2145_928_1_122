@@ -1,25 +1,14 @@
-package com.example.demo.entity;
+package com.example.demo.repository;
 
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Optional;
 
-@Entity
-@Table(name = "sales")
-public class SaleTransaction {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+import com.example.demo.entity.User;
 
-    private BigDecimal saleAmount;
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    private Timestamp transactionDate =
-            new Timestamp(System.currentTimeMillis());
-
-    @ManyToOne
-    @JoinColumn(name = "discount_code_id")
-    private DiscountCode discountCode;
-
-    // getters & setters
+    Optional<User> findByEmail(String email);
 }
