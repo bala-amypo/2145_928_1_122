@@ -1,28 +1,55 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
-@Entity
 public class Influencer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String socialHandle;
     private String email;
     private Boolean active = true;
-
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-    @OneToMany(mappedBy = "influencer")
-    private List<DiscountCode> discountCodes;
+    // ✅ REQUIRED GETTERS & SETTERS
 
-    @OneToMany(mappedBy = "influencer")
-    private List<RoiReport> roiReports;
+    public Long getId() {
+        return id;
+    }
 
-    // getters & setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSocialHandle() {
+        return socialHandle;
+    }
+
+    public void setSocialHandle(String socialHandle) {
+        this.socialHandle = socialHandle;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
