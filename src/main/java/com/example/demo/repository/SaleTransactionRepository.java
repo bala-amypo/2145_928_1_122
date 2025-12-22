@@ -11,5 +11,6 @@ import com.example.demo.entity.SaleTransaction;
 public interface SaleTransactionRepository
         extends JpaRepository<SaleTransaction, Long> {
 
-    List<SaleTransaction> findByDiscountCodeId(Long discountCodeId);
+    // ✅ MUST MATCH ENTITY FIELD NAME
+    List<SaleTransaction> findByDiscountCode_Id(Long codeId);
 }

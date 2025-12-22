@@ -12,30 +12,18 @@ public class SaleTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal saleAmount;
-
-    private Timestamp transactionDate = new Timestamp(System.currentTimeMillis());
-
+    // ✅ RELATIONSHIP
     @ManyToOne
     @JoinColumn(name = "discount_code_id")
     private DiscountCode discountCode;
 
-    public SaleTransaction() {}
+    private BigDecimal saleAmount;
 
+    private Timestamp transactionDate = new Timestamp(System.currentTimeMillis());
+
+    // getters & setters
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getSaleAmount() {
-        return saleAmount;
-    }
-
-    public void setSaleAmount(BigDecimal saleAmount) {
-        this.saleAmount = saleAmount;
     }
 
     public DiscountCode getDiscountCode() {
@@ -44,5 +32,13 @@ public class SaleTransaction {
 
     public void setDiscountCode(DiscountCode discountCode) {
         this.discountCode = discountCode;
+    }
+
+    public BigDecimal getSaleAmount() {
+        return saleAmount;
+    }
+
+    public void setSaleAmount(BigDecimal saleAmount) {
+        this.saleAmount = saleAmount;
     }
 }
