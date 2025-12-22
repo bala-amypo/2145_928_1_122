@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users")   // 👈 VERY IMPORTANT
 public class User {
 
     @Id
@@ -12,23 +12,14 @@ public class User {
 
     private String fullName;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     private String password;
-
     private String role;
 
-    // ✅ REQUIRED: Default constructor
-    public User() {}
-
-    // ✅ Getters & Setters
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFullName() {
@@ -42,11 +33,11 @@ public class User {
     public String getEmail() {
         return email;
     }
- 
+
     public void setEmail(String email) {
         this.email = email;
     }
- 
+
     public String getPassword() {
         return password;
     }
