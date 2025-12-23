@@ -30,7 +30,6 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
 
     @Override
     public List<SaleTransaction> getSalesByCode(Long codeId) {
-        // ✅ THIS METHOD NOW EXISTS
         return repo.findByDiscountCode_Id(codeId);
     }
 }

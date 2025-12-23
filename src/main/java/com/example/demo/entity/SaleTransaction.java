@@ -12,7 +12,6 @@ public class SaleTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ✅ RELATIONSHIP
     @ManyToOne
     @JoinColumn(name = "discount_code_id")
     private DiscountCode discountCode;
@@ -21,7 +20,6 @@ public class SaleTransaction {
 
     private Timestamp transactionDate = new Timestamp(System.currentTimeMillis());
 
-    // getters & setters
     public Long getId() {
         return id;
     }

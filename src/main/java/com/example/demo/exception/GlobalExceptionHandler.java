@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 🔴 400 - Validation errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleValidationErrors(
@@ -28,7 +27,6 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
-    // 🔴 404 - Resource not found
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNotFound(
@@ -37,7 +35,6 @@ public class GlobalExceptionHandler {
         return Map.of("error", ex.getMessage());
     }
 
-    // 🔴 409 - Duplicate resource
     @ExceptionHandler(DuplicateResourceException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleDuplicate(
@@ -46,7 +43,6 @@ public class GlobalExceptionHandler {
         return Map.of("error", ex.getMessage());
     }
 
-    // 🔴 400 - Invalid date
     @ExceptionHandler(InvalidDateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleInvalidDate(
@@ -55,7 +51,6 @@ public class GlobalExceptionHandler {
         return Map.of("error", ex.getMessage());
     }
 
-    // 🔴 500 - Any unknown error
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleGeneralError(Exception ex) {
