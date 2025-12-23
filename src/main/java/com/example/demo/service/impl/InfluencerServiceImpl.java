@@ -31,4 +31,5 @@ public class InfluencerServiceImpl implements InfluencerService {
     public void deactivateInfluencer(Long id) {
         repo.findById(id).ifPresent(i -> i.setActive(false));
     }
+    
 }
