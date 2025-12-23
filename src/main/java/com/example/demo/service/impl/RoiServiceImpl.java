@@ -27,12 +27,13 @@
 //     public List<RoiReport> getReportsByCampaign(Long campaignId) {
 //         return repo.findByCampaign_Id(campaignId);
 //     }
-// }
-package com.example.demo.service.impl;
+// }package com.example.demo.service.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DiscountCode;
@@ -58,22 +59,32 @@ public class RoiServiceImpl implements RoiService {
         this.discountCodeRepository = discountCodeRepository;
     }
 
+    /**
+     * ACID:
+     * If ROI calculation or save fails → rollback
+     */
     @Override
+    @Transactional
     public RoiReport generateReportForCode(Long discountCodeId) {
+
         DiscountCode code = discountCodeRepository.findById(discountCodeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
 
-        List<SaleTransaction> sales = saleTransactionRepository.findByDiscountCodeId(discountCodeId);
+        List<SaleTransaction> sales =
+                saleTransactionRepository.findByDiscountCodeId(discountCodeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
-        for (SaleTransaction s : sales) {
-            totalSales = totalSales.add(s.getTransactionAmount());
+        for (SaleTransaction sale : sales) {
+            totalSales = totalSales.add(sale.getTransactionAmount());
         }
 
-        int totalTransactions = sales.size();
-        double roiPercentage = totalSales.doubleValue();
+        RoiReport report = new RoiReport(
+                code,
+                totalSales,
+                sales.size(),
+                totalSales.doubleValue()
+        );
 
-        RoiReport report = new RoiReport(code, totalSales, totalTransactions, roiPercentage);
         return roiReportRepository.save(report);
     }
 

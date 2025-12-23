@@ -32,12 +32,13 @@
 //     public List<SaleTransaction> getSalesByCode(Long codeId) {
 //         return repo.findByDiscountCode_Id(codeId);
 //     }
-// }
-package com.example.demo.service.impl;
+// }package com.example.demo.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.SaleTransaction;
@@ -57,8 +58,17 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
         this.discountCodeRepository = discountCodeRepository;
     }
 
+    /**
+     * ACID:
+     * Atomicity – all DB ops succeed or rollback
+     * Consistency – validates transaction rules
+     * Isolation – concurrent safety
+     * Durability – committed data is permanent
+     */
     @Override
+    @Transactional
     public SaleTransaction createSale(SaleTransaction transaction) {
+
         if (transaction.getTransactionAmount().doubleValue() <= 0) {
             throw new IllegalArgumentException("Transaction amount must be > 0");
         }
@@ -67,7 +77,8 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
 
         if (transaction.getTransactionDate() == null) {
-            transaction.setTransactionDate(new Timestamp(System.currentTimeMillis()));
+            transaction.setTransactionDate(
+                    new Timestamp(System.currentTimeMillis()));
         }
 
         return saleTransactionRepository.save(transaction);

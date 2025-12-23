@@ -45,9 +45,11 @@
 //         return "Login successful";
 //     }
 // }package com.example.demo.service.impl;
+package com.example.demo.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.User;
@@ -66,7 +68,12 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * ACID:
+     * Password encode + save must be atomic
+     */
     @Override
+    @Transactional
     public User registerUser(User user) {
         if (user.getRole() == null) {
             user.setRole("USER");
