@@ -9,16 +9,14 @@
 //     Optional<DiscountCode> getCodeById(Long id);
 //     List<DiscountCode> getAllCodes();
 //     void deactivateCode(Long id);
-// }
-package com.example.demo.repository;
+// }package com.example.demo.service;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.DiscountCode;
 
-public interface DiscountCodeRepository extends JpaRepository<DiscountCode, Long> {
-
-    List<DiscountCode> findByInfluencerId(Long influencerId);
-
-    List<DiscountCode> findByCampaignId(Long campaignId);
+public interface DiscountCodeService {
+    DiscountCode getDiscountCodeById(Long id);
+    DiscountCode updateDiscountCode(Long id, DiscountCode updated);
+    List<DiscountCode> getCodesForInfluencer(Long influencerId);
+    List<DiscountCode> getCodesForCampaign(Long campaignId);
 }

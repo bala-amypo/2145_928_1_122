@@ -10,12 +10,13 @@
 //     Optional<Influencer> getInfluencerById(Long id);
 //     void deactivateInfluencer(Long id);
 // }
-package com.example.demo.repository;
+package com.example.demo.service;
 
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 import com.example.demo.model.Influencer;
 
-public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
-    Optional<Influencer> findBySocialHandle(String socialHandle);
+public interface InfluencerService {
+    Influencer createInfluencer(Influencer influencer);
+    List<Influencer> getAllInfluencers();
+    Influencer getInfluencerById(Long id);
 }

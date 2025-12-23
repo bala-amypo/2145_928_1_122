@@ -10,10 +10,13 @@
 //     Optional<Campaign> getCampaignById(Long id);
 //     void deactivateCampaign(Long id);
 // }
-package com.example.demo.repository;
+package com.example.demo.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 import com.example.demo.model.Campaign;
 
-public interface CampaignRepository extends JpaRepository<Campaign, Long> {
+public interface CampaignService {
+    Campaign updateCampaign(Long id, Campaign campaign);
+    Campaign getCampaignById(Long id);
+    List<Campaign> getAllCampaigns();
 }
