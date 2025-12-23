@@ -20,7 +20,6 @@ public class RegisterRequest {
     @NotBlank(message = "Role is required")
     private String role;
 
-    // getters & setters
     public String getFullName() {
         return fullName;
     }
