@@ -32,7 +32,9 @@
 //     public List<SaleTransaction> getSalesByCode(Long codeId) {
 //         return repo.findByDiscountCode_Id(codeId);
 //     }
-// }package com.example.demo.service.impl;
+// }
+
+package com.example.demo.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -46,25 +48,19 @@ import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.SaleTransactionService;
 
-@Service
+@Service   // 🔥 THIS MUST EXIST
 public class SaleTransactionServiceImpl implements SaleTransactionService {
 
     private final SaleTransactionRepository saleTransactionRepository;
     private final DiscountCodeRepository discountCodeRepository;
 
+    // ✅ Constructor injection
     public SaleTransactionServiceImpl(SaleTransactionRepository saleTransactionRepository,
                                       DiscountCodeRepository discountCodeRepository) {
         this.saleTransactionRepository = saleTransactionRepository;
         this.discountCodeRepository = discountCodeRepository;
     }
 
-    /**
-     * ACID:
-     * Atomicity – all DB ops succeed or rollback
-     * Consistency – validates transaction rules
-     * Isolation – concurrent safety
-     * Durability – committed data is permanent
-     */
     @Override
     @Transactional
     public SaleTransaction createSale(SaleTransaction transaction) {
@@ -74,7 +70,8 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
         }
 
         discountCodeRepository.findById(transaction.getDiscountCode().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Discount code not found"));
 
         if (transaction.getTransactionDate() == null) {
             transaction.setTransactionDate(
