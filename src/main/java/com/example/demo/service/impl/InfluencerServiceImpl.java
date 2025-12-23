@@ -1,35 +1,46 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.Influencer;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Influencer;
 import com.example.demo.repository.InfluencerRepository;
 import com.example.demo.service.InfluencerService;
 
 @Service
 public class InfluencerServiceImpl implements InfluencerService {
 
-    @Autowired
-    InfluencerRepository repo;
+    private final InfluencerRepository influencerRepository;
 
-    public Influencer insertInfluencer(Influencer i) {
-        return repo.save(i);
+    // ✅ Constructor injection (REQUIRED)
+    public InfluencerServiceImpl(InfluencerRepository influencerRepository) {
+        this.influencerRepository = influencerRepository;
     }
 
+    // ✅ Correct method name + duplicate check
+    @Override
+    public Influencer createInfluencer(Influencer influencer) {
+
+        influencerRepository.findBySocialHandle(influencer.getSocialHandle())
+                .ifPresent(i -> {
+                    throw new RuntimeException("Duplicate social handle");
+                });
+
+        return influencerRepository.save(influencer);
+    }
+
+    @Override
     public List<Influencer> getAllInfluencers() {
-        return repo.findAll();
+        return influencerRepository.findAll();
     }
 
-    public Optional<Influencer> getInfluencerById(Long id) {
-        return repo.findById(id);
+    // ✅ Must return Influencer, not Optional
+    @Override
+    public Influencer getInfluencerById(Long id) {
+        return influencerRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Influencer not found"));
     }
-
-    public void deactivateInfluencer(Long id) {
-        repo.findById(id).ifPresent(i -> i.setActive(false));
-    }
-    
 }
