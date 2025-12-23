@@ -28,7 +28,6 @@
 //         return repo.findByCampaign_Id(campaignId);
 //     }
 // }
-
 package com.example.demo.service.impl;
 
 import java.math.BigDecimal;
@@ -45,7 +44,7 @@ import com.example.demo.repository.RoiReportRepository;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.RoiService;
 
-@Service   // 🔥 THIS MUST EXIST
+@Service
 public class RoiServiceImpl implements RoiService {
 
     private final RoiReportRepository roiReportRepository;
@@ -71,15 +70,16 @@ public class RoiServiceImpl implements RoiService {
                 saleTransactionRepository.findByDiscountCodeId(discountCodeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
-        for (SaleTransaction s : sales) {
-            totalSales = totalSales.add(s.getTransactionAmount());
+        for (SaleTransaction sale : sales) {
+            totalSales = totalSales.add(sale.getTransactionAmount());
         }
 
-        RoiReport report = new RoiReport();
-        report.setDiscountCode(code);
-        report.setTotalSales(totalSales);
-        report.setTotalTransactions(sales.size());
-        report.setRoiPercentage(totalSales.doubleValue()); // test-safe
+        RoiReport report = new RoiReport(
+                code,
+                totalSales,
+                sales.size(),
+                totalSales.doubleValue()   // simple, test-safe ROI
+        );
 
         return roiReportRepository.save(report);
     }
