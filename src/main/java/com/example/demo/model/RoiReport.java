@@ -37,11 +37,18 @@
 //     public Influencer getInfluencer() {
 //         return influencer;
 //     }
-// }package com.example.demo.model;
+// }
+package com.example.demo.model;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roi_reports")
@@ -51,6 +58,7 @@ public class RoiReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ✅ IMPORTED CORRECTLY FROM SAME PACKAGE
     @ManyToOne
     @JoinColumn(name = "discount_code_id")
     private DiscountCode discountCode;
@@ -61,11 +69,11 @@ public class RoiReport {
 
     private Double roiPercentage;
 
-    // ✅ Required by JPA
+    // ✅ REQUIRED BY JPA
     public RoiReport() {
     }
 
-    // ✅ Used by service (NO setters needed)
+    // ✅ USED BY SERVICE
     public RoiReport(DiscountCode discountCode,
                      BigDecimal totalSales,
                      Integer totalTransactions,
