@@ -1,14 +1,14 @@
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
-// import java.util.List;
+import java.util.List;
 
-// import jakarta.validation.Valid;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-// import com.example.demo.entity.RoiReport;
-// import com.example.demo.exception.ResourceNotFoundException;
-// import com.example.demo.service.RoiService;
+import com.example.demo.entity.RoiReport;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.service.RoiService;
 
 // @RestController
 // @RequestMapping("/api/roi")
@@ -43,13 +43,6 @@
 //         return ResponseEntity.ok(service.getReportsByCampaign(campaignId));
 //     }
 // }
-package com.example.demo.controller;
-
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
-
-import com.example.demo.model.RoiReport;
-import com.example.demo.service.RoiService;
 
 @RestController
 @RequestMapping("/roi")

@@ -28,7 +28,6 @@
 //         return repo.findByCampaign_Id(campaignId);
 //     }
 // }
-
 package com.example.demo.service.impl;
 
 import java.math.BigDecimal;
@@ -45,14 +44,13 @@ import com.example.demo.repository.RoiReportRepository;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.RoiService;
 
-@Service   // ✅ THIS WAS MISSING OR WRONG
+@Service   // 🔥 THIS MUST EXIST
 public class RoiServiceImpl implements RoiService {
 
     private final RoiReportRepository roiReportRepository;
     private final SaleTransactionRepository saleTransactionRepository;
     private final DiscountCodeRepository discountCodeRepository;
 
-    // ✅ Constructor injection
     public RoiServiceImpl(RoiReportRepository roiReportRepository,
                           SaleTransactionRepository saleTransactionRepository,
                           DiscountCodeRepository discountCodeRepository) {
@@ -76,15 +74,11 @@ public class RoiServiceImpl implements RoiService {
             totalSales = totalSales.add(s.getTransactionAmount());
         }
 
-        int totalTransactions = sales.size();
-
-        double roiPercentage = totalSales.doubleValue(); // test-safe simple logic
-
         RoiReport report = new RoiReport();
         report.setDiscountCode(code);
         report.setTotalSales(totalSales);
-        report.setTotalTransactions(totalTransactions);
-        report.setRoiPercentage(roiPercentage);
+        report.setTotalTransactions(sales.size());
+        report.setRoiPercentage(totalSales.doubleValue()); // test-safe
 
         return roiReportRepository.save(report);
     }
@@ -98,7 +92,6 @@ public class RoiServiceImpl implements RoiService {
 
     @Override
     public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-        return roiReportRepository
-                .findByDiscountCodeInfluencerId(influencerId);
+        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
     }
 }
