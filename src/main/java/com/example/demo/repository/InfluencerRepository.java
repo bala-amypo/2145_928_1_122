@@ -9,6 +9,7 @@
 // public interface InfluencerRepository
 //         extends JpaRepository<Influencer, Long> {
 // }
+
 package com.example.demo.repository;
 
 import java.util.Optional;
