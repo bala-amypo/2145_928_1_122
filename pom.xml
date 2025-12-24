@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="
+           http://maven.apache.org/POM/4.0.0
+           http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +15,6 @@
     <name>demo</name>
     <description>Influencer Campaign ROI Tracker</description>
 
-    <!-- ✅ SPRING BOOT -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -26,7 +26,6 @@
         <java.version>17</java.version>
     </properties>
 
-    <!-- ✅ DEPENDENCIES -->
     <dependencies>
 
         <!-- Spring Web -->
@@ -54,14 +53,14 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!-- H2 Database (TEST SAFE) -->
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- TESTNG (🔥 REQUIRED FOR TEST CASES 🔥) -->
+        <!-- TestNG (REQUIRED FOR PROVIDED TESTS) -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -69,7 +68,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Boot Test (kept for compatibility) -->
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -84,23 +83,20 @@
 
     </dependencies>
 
-    <!-- ✅ BUILD -->
     <build>
         <plugins>
 
-            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- 🔥 SUREFIRE + TESTNG 🔥 -->
+            <!-- Enable TestNG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <useModulePath>false</useModulePath>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
