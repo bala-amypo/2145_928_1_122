@@ -3,32 +3,15 @@ package com.example.demo.model;
 public class DiscountCode {
 
     private Long id;
-    private String codeValue;
-    private double discountPercentage;
+    private Influencer influencer;
+    private Campaign campaign;
 
-    public DiscountCode() {}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public Influencer getInfluencer() { return influencer; }
+    public void setInfluencer(Influencer influencer) { this.influencer = influencer; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCodeValue() {
-        return codeValue;
-    }
-
-    public void setCodeValue(String codeValue) { // REQUIRED
-        this.codeValue = codeValue;
-    }
-
-    public double getDiscountPercentage() {
-        return discountPercentage;
-    }
-
-    public void setDiscountPercentage(double discountPercentage) { // REQUIRED
-        this.discountPercentage = discountPercentage;
-    }
+    public Campaign getCampaign() { return campaign; }
+    public void setCampaign(Campaign campaign) { this.campaign = campaign; }
 }
