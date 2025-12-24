@@ -1,46 +1,6 @@
-// package com.example.demo.service.impl;
-
-// import java.util.List;
-// import java.util.Optional;
-
-// import org.springframework.stereotype.Service;
-
-// import com.example.demo.entity.SaleTransaction;
-// import com.example.demo.repository.SaleTransactionRepository;
-// import com.example.demo.service.SaleTransactionService;
-
-// @Service
-// public class SaleTransactionServiceImpl implements SaleTransactionService {
-
-//     private final SaleTransactionRepository repo;
-
-//     public SaleTransactionServiceImpl(SaleTransactionRepository repo) {
-//         this.repo = repo;
-//     }
-
-//     @Override
-//     public SaleTransaction insertSale(SaleTransaction s) {
-//         return repo.save(s);
-//     }
-
-//     @Override
-//     public Optional<SaleTransaction> getSaleById(Long id) {
-//         return repo.findById(id);
-//     }
-
-//     @Override
-//     public List<SaleTransaction> getSalesByCode(Long codeId) {
-//         return repo.findByDiscountCode_Id(codeId);
-//     }
-// }
-
-
 package com.example.demo.service.impl;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.example.demo.model.SaleTransaction;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.SaleTransactionService;
@@ -48,20 +8,14 @@ import com.example.demo.service.SaleTransactionService;
 @Service
 public class SaleTransactionServiceImpl implements SaleTransactionService {
 
-    private final SaleTransactionRepository repo;
+    private final SaleTransactionRepository repository;
 
-    public SaleTransactionServiceImpl(SaleTransactionRepository repo) {
-        this.repo = repo;
+    public SaleTransactionServiceImpl(SaleTransactionRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    @Transactional
-    public SaleTransaction createSale(SaleTransaction transaction) {
-        return repo.save(transaction);
-    }
-
-    @Override
-    public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
-        return repo.findByDiscountCodeCampaignId(campaignId);
+    public SaleTransaction createSaleTransaction(SaleTransaction saleTransaction) {
+        return repository.save(saleTransaction);
     }
 }
