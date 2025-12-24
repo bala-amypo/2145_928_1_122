@@ -20,11 +20,19 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {          // ✅ REQUIRED
+        return password;
+    }
+
+    public void setPassword(String password) { // ✅ REQUIRED
+        this.password = password;
+    }
+
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) { // REQUIRED
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -32,7 +40,7 @@ public class User {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) { // REQUIRED
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

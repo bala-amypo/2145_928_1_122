@@ -11,11 +11,22 @@ public class RoiReport {
 
     public RoiReport() {}
 
+    // ✅ REQUIRED BY RoiServiceImpl
+    public RoiReport(DiscountCode discountCode,
+                     BigDecimal totalSales,
+                     int totalTransactions,
+                     double roiPercentage) {
+        this.discountCode = discountCode;
+        this.totalSales = totalSales;
+        this.totalTransactions = totalTransactions;
+        this.roiPercentage = roiPercentage;
+    }
+
     public BigDecimal getTotalSales() {
         return totalSales;
     }
 
-    public void setTotalSales(BigDecimal totalSales) { // REQUIRED
+    public void setTotalSales(BigDecimal totalSales) {
         this.totalSales = totalSales;
     }
 
@@ -23,7 +34,7 @@ public class RoiReport {
         return totalTransactions;
     }
 
-    public void setTotalTransactions(int totalTransactions) { // REQUIRED
+    public void setTotalTransactions(int totalTransactions) {
         this.totalTransactions = totalTransactions;
     }
 
@@ -31,7 +42,7 @@ public class RoiReport {
         return roiPercentage;
     }
 
-    public void setRoiPercentage(double roiPercentage) { // REQUIRED
+    public void setRoiPercentage(double roiPercentage) {
         this.roiPercentage = roiPercentage;
     }
 
@@ -39,7 +50,7 @@ public class RoiReport {
         return discountCode;
     }
 
-    public void setDiscountCode(DiscountCode discountCode) { // REQUIRED
+    public void setDiscountCode(DiscountCode discountCode) {
         this.discountCode = discountCode;
     }
 }
