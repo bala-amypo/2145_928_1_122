@@ -1,73 +1,45 @@
-// package com.example.demo.entity;
-
-// import java.math.BigDecimal;
-// import java.sql.Timestamp;
-
-// import jakarta.persistence.*;
-
-// @Entity
-// public class RoiReport {
-
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-
-//     private BigDecimal totalSales;
-//     private BigDecimal totalRevenue;
-//     private BigDecimal roiPercentage;
-
-//     private Timestamp generatedAt = new Timestamp(System.currentTimeMillis());
-
-//     @ManyToOne
-//     private Campaign campaign;
-
-//     @ManyToOne
-//     private Influencer influencer;
-
-//     public RoiReport() {}
-
-//     public Long getId() {
-//         return id;
-//     }
-
-//     public Campaign getCampaign() {
-//         return campaign;
-//     }
-
-//     public Influencer getInfluencer() {
-//         return influencer;
-//     }
-// }
-
 package com.example.demo.model;
 
 import java.math.BigDecimal;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "roi_reports")
 public class RoiReport {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private DiscountCode discountCode;
-
     private BigDecimal totalSales;
-    private Integer totalTransactions;
-    private Double roiPercentage;
+    private int totalTransactions;
+    private double roiPercentage;
+    private DiscountCode discountCode;
 
     public RoiReport() {}
 
-    public RoiReport(DiscountCode code, BigDecimal totalSales,
-                     Integer totalTransactions, Double roiPercentage) {
-        this.discountCode = code;
+    public BigDecimal getTotalSales() {
+        return totalSales;
+    }
+
+    public void setTotalSales(BigDecimal totalSales) { // REQUIRED
         this.totalSales = totalSales;
+    }
+
+    public int getTotalTransactions() {
+        return totalTransactions;
+    }
+
+    public void setTotalTransactions(int totalTransactions) { // REQUIRED
         this.totalTransactions = totalTransactions;
+    }
+
+    public double getRoiPercentage() {
+        return roiPercentage;
+    }
+
+    public void setRoiPercentage(double roiPercentage) { // REQUIRED
         this.roiPercentage = roiPercentage;
     }
 
-    public Long getId() { return id; }
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) { // REQUIRED
+        this.discountCode = discountCode;
+    }
 }
