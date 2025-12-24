@@ -13,7 +13,7 @@
 package com.example.demo.service;
 
 import java.util.List;
-import com.example.demo.entity.Influencer;
+import com.example.demo.model.Influencer;
 
 public interface InfluencerService {
 

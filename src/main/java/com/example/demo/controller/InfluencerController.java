@@ -1,63 +1,16 @@
-// package com.example.demo.controller;
-
-// import java.util.List;
-
-// import jakarta.validation.Valid;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
-
-// import com.example.demo.entity.Influencer;
-// import com.example.demo.exception.ResourceNotFoundException;
-// import com.example.demo.service.InfluencerService;
-
-// @RestController
-// @RequestMapping("/api/influencers")
-// public class InfluencerController {
-
-//     private final InfluencerService service;
-
-//     public InfluencerController(InfluencerService service) {
-//         this.service = service;
-//     }
-
-//     @PostMapping("/add")
-//     public ResponseEntity<Influencer> add(
-//             @Valid @RequestBody Influencer i) {
-
-//         return ResponseEntity.ok(service.insertInfluencer(i));
-//     }
-
-//     @GetMapping("/getAll")
-//     public ResponseEntity<List<Influencer>> getAll() {
-//         return ResponseEntity.ok(service.getAllInfluencers());
-//     }
-
-//     @GetMapping("/get/{id}")
-//     public ResponseEntity<Influencer> get(@PathVariable Long id) {
-
-//         Influencer influencer = service.getInfluencerById(id)
-//                 .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
-
-//         return ResponseEntity.ok(influencer);
-//     }
-
-//     @PutMapping("/deactivate/{id}")
-//     public ResponseEntity<String> deactivate(@PathVariable Long id) {
-
-//         service.deactivateInfluencer(id);
-//         return ResponseEntity.ok("Influencer deactivated");
-//     }
-// }
 package com.example.demo.controller;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Influencer;
+import com.example.demo.entity.Influencer;
 import com.example.demo.service.InfluencerService;
 
 @RestController
-@RequestMapping("/influencers")
+@RequestMapping("/api/influencers")
 public class InfluencerController {
 
     private final InfluencerService influencerService;
@@ -66,18 +19,22 @@ public class InfluencerController {
         this.influencerService = influencerService;
     }
 
+    // 🔥 TEST EXPECTS THIS NAME
     @PostMapping
-    public Influencer create(@RequestBody Influencer influencer) {
-        return influencerService.createInfluencer(influencer);
-    }
-
-    @GetMapping
-    public List<Influencer> getAll() {
-        return influencerService.getAllInfluencers();
+    public ResponseEntity<Influencer> createInfluencer(@RequestBody Influencer influencer) {
+        return new ResponseEntity<>(
+                influencerService.createInfluencer(influencer),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/{id}")
-    public Influencer getById(@PathVariable Long id) {
-        return influencerService.getInfluencerById(id);
+    public ResponseEntity<Influencer> getInfluencer(@PathVariable Long id) {
+        return ResponseEntity.ok(influencerService.getInfluencerById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Influencer>> getAllInfluencers() {
+        return ResponseEntity.ok(influencerService.getAllInfluencers());
     }
 }

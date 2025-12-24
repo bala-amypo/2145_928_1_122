@@ -12,7 +12,7 @@
 package com.example.demo.service;
 
 import java.util.List;
-import com.example.demo.entity.RoiReport;
+import com.example.demo.model.RoiReport;
 
 public interface RoiService {
 
