@@ -1,10 +1,14 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Entity
 public class SaleTransaction {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
@@ -18,6 +22,5 @@ public class SaleTransaction {
         transactionDate = new Timestamp(System.currentTimeMillis());
     }
 
-    // getters + setters
+    // getters & setters
 }
-

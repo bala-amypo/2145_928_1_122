@@ -1,10 +1,14 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Entity
 public class RoiReport {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
@@ -23,5 +27,5 @@ public class RoiReport {
         generatedAt = new Timestamp(System.currentTimeMillis());
     }
 
-    // getters + setters
+    // getters & setters
 }
