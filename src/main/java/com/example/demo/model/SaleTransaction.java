@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import java.sql.Timestamp;
+
 @Entity
 public class SaleTransaction {
 
@@ -22,5 +24,8 @@ public class SaleTransaction {
         transactionDate = new Timestamp(System.currentTimeMillis());
     }
 
-    // getters & setters
+    public BigDecimal getTransactionAmount() {
+        return saleAmount;
+    }
 }
+

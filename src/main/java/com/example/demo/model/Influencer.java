@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+import java.sql.Timestamp;
+
 @Entity
 public class Influencer {
 
@@ -8,23 +11,22 @@ public class Influencer {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String socialHandle;
+
     private String email;
     private Boolean active = true;
+    private Timestamp createdAt;
 
-    public String getSocialHandle() {
-        return socialHandle;
+    @PrePersist
+    void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public void setSocialHandle(String socialHandle) {
-        this.socialHandle = socialHandle;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getSocialHandle() { return socialHandle; }
+    public void setSocialHandle(String socialHandle) { this.socialHandle = socialHandle; }
 }

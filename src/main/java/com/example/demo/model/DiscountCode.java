@@ -1,13 +1,16 @@
 package com.example.demo.model;
+
 import jakarta.persistence.*;
 
 @Entity
 public class DiscountCode {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
     private String code;
-    private Double discountPercentage;
-    private Boolean active = true;
 
     @ManyToOne
     private Influencer influencer;
@@ -15,5 +18,10 @@ public class DiscountCode {
     @ManyToOne
     private Campaign campaign;
 
-}
+    private Double discountPercentage;
+    private Boolean active = true;
 
+    public Long getId() { return id; }
+    public String getCode() { return code; }
+    public Double getDiscountPercentage() { return discountPercentage; }
+}
