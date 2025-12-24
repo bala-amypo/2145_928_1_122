@@ -40,11 +40,12 @@
 //         this.saleAmount = saleAmount;
 //     }
 // }
-package com.example.demo.model;
 
-import jakarta.persistence.*;
+package com.example.demo.entity;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "sale_transactions")
@@ -54,28 +55,23 @@ public class SaleTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private BigDecimal transactionAmount;
+    private Timestamp transactionDate;
+
     @ManyToOne
     private DiscountCode discountCode;
 
-    private BigDecimal transactionAmount;
-    private Timestamp transactionDate;
-    private Long customerId;
-
     public SaleTransaction() {}
 
-    public SaleTransaction(DiscountCode discountCode, BigDecimal transactionAmount,
-                           Timestamp transactionDate, Long customerId) {
-        this.discountCode = discountCode;
-        this.transactionAmount = transactionAmount;
-        this.transactionDate = transactionDate;
-        this.customerId = customerId;
+    public SaleTransaction(BigDecimal amount, DiscountCode code) {
+        this.transactionAmount = amount;
+        this.discountCode = code;
+        this.transactionDate = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() { return id; }
-    public DiscountCode getDiscountCode() { return discountCode; }
     public BigDecimal getTransactionAmount() { return transactionAmount; }
-    public Timestamp getTransactionDate() { return transactionDate; }
-    public Long getCustomerId() { return customerId; }
+    public DiscountCode getDiscountCode() { return discountCode; }
 
     public void setTransactionDate(Timestamp transactionDate) {
         this.transactionDate = transactionDate;

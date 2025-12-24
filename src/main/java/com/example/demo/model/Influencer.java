@@ -63,13 +63,16 @@
 //         this.active = active;
 //     }
 // }
-package com.example.demo.model;
+
+
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "influencers")
+@Table(name = "influencers", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "socialHandle")
+})
 public class Influencer {
 
     @Id
@@ -77,21 +80,14 @@ public class Influencer {
     private Long id;
 
     private String name;
-
-    @Column(unique = true)
     private String socialHandle;
-
     private boolean active = true;
-
-    @OneToMany(mappedBy = "influencer")
-    private List<DiscountCode> discountCodes;
 
     public Influencer() {}
 
-    public Influencer(String name, String socialHandle, boolean active) {
+    public Influencer(String name, String socialHandle) {
         this.name = name;
         this.socialHandle = socialHandle;
-        this.active = active;
     }
 
     public Long getId() { return id; }
@@ -99,7 +95,5 @@ public class Influencer {
     public String getSocialHandle() { return socialHandle; }
     public boolean isActive() { return active; }
 
-    public void setName(String name) { this.name = name; }
-    public void setSocialHandle(String socialHandle) { this.socialHandle = socialHandle; }
     public void setActive(boolean active) { this.active = active; }
 }
