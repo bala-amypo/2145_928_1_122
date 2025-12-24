@@ -53,7 +53,7 @@ package com.example.demo.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Influencer;
+import com.example.demo.entity.Influencer;
 import com.example.demo.service.InfluencerService;
 
 @RestController

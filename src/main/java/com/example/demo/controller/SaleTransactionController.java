@@ -48,36 +48,26 @@ package com.example.demo.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.SaleTransaction;
+import com.example.demo.entity.SaleTransaction;
 import com.example.demo.service.SaleTransactionService;
 
 @RestController
 @RequestMapping("/sales")
 public class SaleTransactionController {
 
-    private final SaleTransactionService saleTransactionService;
+    private final SaleTransactionService service;
 
-    public SaleTransactionController(SaleTransactionService saleTransactionService) {
-        this.saleTransactionService = saleTransactionService;
+    public SaleTransactionController(SaleTransactionService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public SaleTransaction create(@RequestBody SaleTransaction tx) {
-        return saleTransactionService.createSale(tx);
-    }
-
-    @GetMapping("/code/{id}")
-    public List<SaleTransaction> byCode(@PathVariable Long id) {
-        return saleTransactionService.getSalesForCode(id);
-    }
-
-    @GetMapping("/influencer/{id}")
-    public List<SaleTransaction> byInfluencer(@PathVariable Long id) {
-        return saleTransactionService.getSalesForInfluencer(id);
+    public SaleTransaction create(@RequestBody SaleTransaction t) {
+        return service.createSale(t);
     }
 
     @GetMapping("/campaign/{id}")
     public List<SaleTransaction> byCampaign(@PathVariable Long id) {
-        return saleTransactionService.getSalesForCampaign(id);
+        return service.getSalesForCampaign(id);
     }
 }

@@ -49,7 +49,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.RoiReport;
+import com.example.demo.entity.RoiReport;
 import com.example.demo.service.RoiService;
 
 @RestController

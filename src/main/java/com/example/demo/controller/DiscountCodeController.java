@@ -53,7 +53,7 @@ package com.example.demo.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.DiscountCode;
+import com.example.demo.entity.DiscountCode;
 import com.example.demo.service.DiscountCodeService;
 
 @RestController

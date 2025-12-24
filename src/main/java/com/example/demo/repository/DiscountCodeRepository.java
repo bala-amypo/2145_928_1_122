@@ -19,7 +19,7 @@ package com.example.demo.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.model.DiscountCode;
+import com.example.demo.entity.DiscountCode;
 
 public interface DiscountCodeRepository extends JpaRepository<DiscountCode, Long> {
 

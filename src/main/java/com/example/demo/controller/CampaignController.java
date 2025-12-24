@@ -53,7 +53,7 @@ package com.example.demo.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Campaign;
+import com.example.demo.entity.Campaign;
 import com.example.demo.service.CampaignService;
 
 @RestController
