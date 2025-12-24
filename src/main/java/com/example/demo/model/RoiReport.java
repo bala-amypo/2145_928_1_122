@@ -39,7 +39,7 @@
 //     }
 // }
 
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import java.math.BigDecimal;
 import jakarta.persistence.*;

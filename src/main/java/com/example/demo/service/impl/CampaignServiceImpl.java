@@ -39,7 +39,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.entity.Campaign;
+import com.example.demo.model.Campaign;
 import com.example.demo.repository.CampaignRepository;
 import com.example.demo.service.CampaignService;
 
