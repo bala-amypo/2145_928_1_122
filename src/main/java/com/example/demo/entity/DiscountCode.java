@@ -75,6 +75,7 @@
 //     }
 // }
 
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -96,11 +97,41 @@ public class DiscountCode {
     @ManyToOne
     private Influencer influencer;
 
-    public DiscountCode() {}
+    // ===== GETTERS =====
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public String getCodeValue() { return codeValue; }
-    public double getDiscountPercentage() { return discountPercentage; }
-    public Campaign getCampaign() { return campaign; }
-    public Influencer getInfluencer() { return influencer; }
+    public String getCodeValue() {
+        return codeValue;
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public Influencer getInfluencer() {
+        return influencer;
+    }
+
+    // ===== SETTERS =====
+    public void setCodeValue(String codeValue) {
+        this.codeValue = codeValue;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
+    }
+
+    public void setInfluencer(Influencer influencer) {
+        this.influencer = influencer;
+    }
 }
