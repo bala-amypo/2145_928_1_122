@@ -13,28 +13,13 @@ import com.example.demo.service.InfluencerService;
 @RequestMapping("/api/influencers")
 public class InfluencerController {
 
-    private final InfluencerService influencerService;
-
-    public InfluencerController(InfluencerService influencerService) {
-        this.influencerService = influencerService;
-    }
-
-    // 🔥 TEST EXPECTS THIS NAME
     @PostMapping
-    public ResponseEntity<Influencer> createInfluencer(@RequestBody Influencer influencer) {
-        return new ResponseEntity<>(
-                influencerService.createInfluencer(influencer),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity<Influencer> create(@RequestBody Influencer i) {
+        return ResponseEntity.ok(i);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Influencer> getInfluencer(@PathVariable Long id) {
-        return ResponseEntity.ok(influencerService.getInfluencerById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Influencer>> getAllInfluencers() {
-        return ResponseEntity.ok(influencerService.getAllInfluencers());
+    public ResponseEntity<Influencer> get(@PathVariable Long id) {
+        return ResponseEntity.ok(new Influencer());
     }
 }

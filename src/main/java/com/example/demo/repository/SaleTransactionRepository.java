@@ -1,18 +1,4 @@
-// package com.example.demo.repository;
 
-// import java.util.List;
-
-// import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.stereotype.Repository;
-
-// import com.example.demo.entity.SaleTransaction;
-
-// @Repository
-// public interface SaleTransactionRepository
-//         extends JpaRepository<SaleTransaction, Long> {
-
-//     List<SaleTransaction> findByDiscountCode_Id(Long codeId);
-// }
 package com.example.demo.repository;
 
 import java.util.List;
@@ -20,10 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.SaleTransaction;
 
 public interface SaleTransactionRepository extends JpaRepository<SaleTransaction, Long> {
-
-    List<SaleTransaction> findByDiscountCodeId(Long discountCodeId);
-
-    List<SaleTransaction> findByDiscountCodeInfluencerId(Long influencerId);
-
-    List<SaleTransaction> findByDiscountCodeCampaignId(Long campaignId);
+    List<SaleTransaction> findByDiscountCode_Id(Long codeId);
+    List<SaleTransaction> findByDiscountCode_Influencer_Id(Long influencerId);
+    List<SaleTransaction> findByDiscountCode_Campaign_Id(Long campaignId);
 }

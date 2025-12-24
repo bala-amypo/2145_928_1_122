@@ -2,16 +2,22 @@ package com.example.demo.model;
 
 import java.math.BigDecimal;
 
+@Entity
 public class SaleTransaction {
-
+    @Id @GeneratedValue
     private Long id;
-    private BigDecimal transactionAmount;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @ManyToOne
+    private DiscountCode discountCode;
 
-    public BigDecimal getTransactionAmount() { return transactionAmount; }
-    public void setTransactionAmount(BigDecimal transactionAmount) {
-        this.transactionAmount = transactionAmount;
+    private BigDecimal saleAmount;
+    private Timestamp transactionDate;
+
+    @PrePersist
+    void onCreate() {
+        transactionDate = new Timestamp(System.currentTimeMillis());
     }
+
+    // getters + setters
 }
+
