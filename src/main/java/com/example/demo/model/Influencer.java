@@ -3,10 +3,14 @@ package com.example.demo.model;
 public class Influencer {
 
     private Long id;
+    private String socialHandle;
     private boolean active;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getSocialHandle() { return socialHandle; }
+    public void setSocialHandle(String socialHandle) { this.socialHandle = socialHandle; }
 
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
