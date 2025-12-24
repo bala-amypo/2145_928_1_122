@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.model.RoiReport;
+import com.example.demo.entity.RoiReport;
 
 public interface RoiReportRepository extends JpaRepository<RoiReport, Long> {
 

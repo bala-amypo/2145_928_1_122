@@ -6,7 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.User;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
 @Service

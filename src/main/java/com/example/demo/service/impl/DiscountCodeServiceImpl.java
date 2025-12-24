@@ -38,7 +38,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.DiscountCode;
+import com.example.demo.entity.DiscountCode;
 import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.service.DiscountCodeService;
 
