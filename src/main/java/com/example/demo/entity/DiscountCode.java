@@ -98,15 +98,9 @@ public class DiscountCode {
 
     public DiscountCode() {}
 
-    public DiscountCode(String codeValue, double discountPercentage,
-                        Campaign campaign, Influencer influencer) {
-        this.codeValue = codeValue;
-        this.discountPercentage = discountPercentage;
-        this.campaign = campaign;
-        this.influencer = influencer;
-    }
-
     public Long getId() { return id; }
+    public String getCodeValue() { return codeValue; }
+    public double getDiscountPercentage() { return discountPercentage; }
     public Campaign getCampaign() { return campaign; }
     public Influencer getInfluencer() { return influencer; }
 }

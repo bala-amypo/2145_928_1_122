@@ -94,12 +94,12 @@ public class Campaign {
 
     public Campaign() {}
 
-    public Campaign(String campaignName, LocalDate startDate, LocalDate endDate) {
-        this.campaignName = campaignName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
     public Long getId() { return id; }
     public String getCampaignName() { return campaignName; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getEndDate() { return endDate; }
+
+    public void setCampaignName(String campaignName) {
+        this.campaignName = campaignName;
+    }
 }
