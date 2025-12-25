@@ -1,27 +1,19 @@
-// package com.example.demo.service;
-
-// import java.util.List;
-// import java.util.Optional;
-// import com.example.demo.entity.DiscountCode;
-
-// public interface DiscountCodeService {
-//     DiscountCode insertCode(DiscountCode d);
-//     Optional<DiscountCode> getCodeById(Long id);
-//     List<DiscountCode> getAllCodes();
-//     void deactivateCode(Long id);
-// }
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.model.DiscountCode;
+import java.util.List;
 
 public interface DiscountCodeService {
 
-    DiscountCode getDiscountCodeById(Long id);
+    DiscountCode createDiscountCode(DiscountCode code);
 
-    DiscountCode updateDiscountCode(Long id, DiscountCode updated);
+    DiscountCode updateDiscountCode(Long id, DiscountCode code);
 
-    List<DiscountCode> getCodesForInfluencer(Long influencerId);
+    DiscountCode getCodeById(Long id);
 
-    List<DiscountCode> getCodesForCampaign(Long campaignId);
+    List<DiscountCode> getCodesByInfluencer(Long influencerId);
+
+    List<DiscountCode> getCodesByCampaign(Long campaignId);
+
+    void deactivateCode(Long id);
 }
