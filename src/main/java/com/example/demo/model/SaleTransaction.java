@@ -2,9 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class SaleTransaction {
@@ -17,15 +15,13 @@ public class SaleTransaction {
     private DiscountCode discountCode;
 
     private BigDecimal saleAmount;
-    private Timestamp transactionDate;
+
+    private LocalDateTime transactionDate;
 
     @PrePersist
     void onCreate() {
-        transactionDate = new Timestamp(System.currentTimeMillis());
+        transactionDate = LocalDateTime.now();
     }
 
-    public BigDecimal getTransactionAmount() {
-        return saleAmount;
-    }
+    public Long getId() { return id; }
 }
-

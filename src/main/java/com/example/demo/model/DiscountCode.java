@@ -19,9 +19,8 @@ public class DiscountCode {
     private Campaign campaign;
 
     private Double discountPercentage;
+
     private Boolean active = true;
 
     public Long getId() { return id; }
-    public String getCode() { return code; }
-    public Double getDiscountPercentage() { return discountPercentage; }
 }

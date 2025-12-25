@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Influencer {
@@ -16,17 +16,18 @@ public class Influencer {
     private String socialHandle;
 
     private String email;
+
     private Boolean active = true;
-    private Timestamp createdAt;
+
+    private LocalDateTime createdAt;
 
     @PrePersist
     void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
+        createdAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
     public String getSocialHandle() { return socialHandle; }
     public void setSocialHandle(String socialHandle) { this.socialHandle = socialHandle; }
+    public void setActive(Boolean active) { this.active = active; }
 }

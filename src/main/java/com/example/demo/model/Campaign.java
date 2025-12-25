@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;     // 🔴 REQUIRED
-import java.time.LocalDate;      // 🔴 REQUIRED
-import java.math.BigDecimal;     // 🔴 REQUIRED
-
-import java.sql.Timestamp;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 public class Campaign {
@@ -16,13 +14,12 @@ public class Campaign {
     @Column(unique = true)
     private String campaignName;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
+
     private BigDecimal budget;
+
     private Boolean active = true;
 
-    public String getCampaignName() { return campaignName; }
-    public LocalDate getStartDate() { return startDate; }
-    public LocalDate getEndDate() { return endDate; }
+    public Long getId() { return id; }
 }
-

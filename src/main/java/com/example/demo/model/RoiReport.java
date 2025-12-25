@@ -2,9 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class RoiReport {
@@ -22,12 +20,13 @@ public class RoiReport {
     private BigDecimal totalSales;
     private BigDecimal totalRevenue;
     private BigDecimal roiPercentage;
-    private Timestamp generatedAt;
+
+    private LocalDateTime generatedAt;
 
     @PrePersist
     void onCreate() {
-        generatedAt = new Timestamp(System.currentTimeMillis());
+        generatedAt = LocalDateTime.now();
     }
 
-    // getters & setters
+    public Long getId() { return id; }
 }
