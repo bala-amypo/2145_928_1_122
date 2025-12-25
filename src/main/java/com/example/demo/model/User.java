@@ -12,6 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fullName;   // ✅ REQUIRED
     private String email;
     private String password;
     private String role;
@@ -24,6 +25,15 @@ public class User {
         return id;
     }
 
+    // ✅ REQUIRED BY AuthController
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -32,7 +42,7 @@ public class User {
         this.email = email;
     }
 
-    // REQUIRED BY SECURITY + TESTS
+    // ✅ REQUIRED BY SECURITY
     public String getPassword() {
         return password;
     }
@@ -41,6 +51,7 @@ public class User {
         this.password = password;
     }
 
+    // ✅ REQUIRED BY JWT
     public String getRole() {
         return role;
     }

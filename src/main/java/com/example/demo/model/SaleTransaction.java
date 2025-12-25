@@ -33,6 +33,11 @@ public class SaleTransaction {
         this.transactionAmount = transactionAmount;
     }
 
+    // ✅ ALIAS FOR RoiServiceImpl
+    public BigDecimal getSaleAmount() {
+        return transactionAmount;
+    }
+
     public Timestamp getTransactionDate() {
         return transactionDate;
     }
