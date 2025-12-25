@@ -23,5 +23,16 @@ public class SaleTransaction {
         transactionDate = LocalDateTime.now();
     }
 
+    // ✅ GETTERS & SETTERS
     public Long getId() { return id; }
+
+    public DiscountCode getDiscountCode() { return discountCode; }
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public BigDecimal getSaleAmount() { return saleAmount; }
+    public void setSaleAmount(BigDecimal saleAmount) {
+        this.saleAmount = saleAmount;
+    }
 }

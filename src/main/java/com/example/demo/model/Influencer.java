@@ -26,8 +26,16 @@ public class Influencer {
         createdAt = LocalDateTime.now();
     }
 
+    // ✅ GETTERS & SETTERS
     public Long getId() { return id; }
+
     public String getSocialHandle() { return socialHandle; }
-    public void setSocialHandle(String socialHandle) { this.socialHandle = socialHandle; }
-    public void setActive(Boolean active) { this.active = active; }
+    public void setSocialHandle(String socialHandle) {
+        this.socialHandle = socialHandle;
+    }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

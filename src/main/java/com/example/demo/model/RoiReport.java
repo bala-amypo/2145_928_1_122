@@ -28,5 +28,21 @@ public class RoiReport {
         generatedAt = LocalDateTime.now();
     }
 
+    // ✅ GETTERS & SETTERS
     public Long getId() { return id; }
+
+    public BigDecimal getTotalSales() { return totalSales; }
+    public void setTotalSales(BigDecimal totalSales) {
+        this.totalSales = totalSales;
+    }
+
+    public BigDecimal getTotalRevenue() { return totalRevenue; }
+    public void setTotalRevenue(BigDecimal totalRevenue) {
+        this.totalRevenue = totalRevenue;
+    }
+
+    public BigDecimal getRoiPercentage() { return roiPercentage; }
+    public void setRoiPercentage(BigDecimal roiPercentage) {
+        this.roiPercentage = roiPercentage;
+    }
 }

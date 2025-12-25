@@ -21,5 +21,9 @@ public class Campaign {
 
     private Boolean active = true;
 
+    // ✅ GETTERS & SETTERS
     public Long getId() { return id; }
+
+    public BigDecimal getBudget() { return budget; }
+    public void setBudget(BigDecimal budget) { this.budget = budget; }
 }
