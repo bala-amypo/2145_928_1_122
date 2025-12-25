@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.RoiReport;
 import com.example.demo.service.RoiService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/roi")
@@ -18,29 +16,18 @@ public class RoiReportController {
         this.roiService = roiService;
     }
 
-    // 🔥 TEST EXPECTS THIS METHOD NAME
-    @PostMapping("/code/{discountCodeId}")
-    public ResponseEntity<RoiReport> generateRoiReport(
-            @PathVariable Long discountCodeId) {
-
-        return ResponseEntity.ok(
-                roiService.generateReportForCode(discountCodeId)
-        );
+    @PostMapping("/generate/{codeId}")
+    public RoiReport generate(@PathVariable Long codeId) {
+        return roiService.generateRoiForCode(codeId);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoiReport> getRoiReport(@PathVariable Long id) {
-        return ResponseEntity.ok(
-                roiService.getReportById(id)
-        );
+    public RoiReport getById(@PathVariable Long id) {
+        return roiService.getReportById(id);
     }
 
-    @GetMapping("/influencer/{influencerId}")
-    public ResponseEntity<List<RoiReport>> getRoiReportsByInfluencer(
-            @PathVariable Long influencerId) {
-
-        return ResponseEntity.ok(
-                roiService.getReportsForInfluencer(influencerId)
-        );
+    @GetMapping("/campaign/{campaignId}")
+    public List<RoiReport> getByCampaign(@PathVariable Long campaignId) {
+        return roiService.getReportsForCampaign(campaignId);
     }
 }

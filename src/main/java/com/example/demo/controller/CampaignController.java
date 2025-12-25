@@ -1,29 +1,44 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.model.Campaign;
+import com.example.demo.service.CampaignService;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Campaign;
+import java.util.List;
 
 @RestController
-@RequestMapping("/campaigns")
+@RequestMapping("/api/campaigns")
 public class CampaignController {
 
+    private final CampaignService campaignService;
+
+    public CampaignController(CampaignService campaignService) {
+        this.campaignService = campaignService;
+    }
+
+    @PostMapping
+    public Campaign create(@RequestBody Campaign campaign) {
+        return campaignService.createCampaign(campaign);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Campaign> updateCampaign(
-            @PathVariable long id,
-            @RequestBody Campaign campaign) {
-        return ResponseEntity.ok(campaign);
+    public Campaign update(@PathVariable Long id,
+                           @RequestBody Campaign campaign) {
+        return campaignService.updateCampaign(id, campaign);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Campaign> getCampaign(@PathVariable long id) {
-        return ResponseEntity.ok(new Campaign());
+    public Campaign getById(@PathVariable Long id) {
+        return campaignService.getCampaignById(id);
     }
 
     @GetMapping
-    public ResponseEntity<List<Campaign>> getAllCampaigns() {
-        return ResponseEntity.ok(List.of());
+    public List<Campaign> getAll() {
+        return campaignService.getAllCampaigns();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deactivate(@PathVariable Long id) {
+        campaignService.deactivateCampaign(id);
     }
 }

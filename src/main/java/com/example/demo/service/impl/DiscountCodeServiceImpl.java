@@ -1,48 +1,11 @@
-// package com.example.demo.service.impl;
-
-// import java.util.List;
-// import java.util.Optional;
-
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-
-// import com.example.demo.entity.DiscountCode;
-// import com.example.demo.repository.DiscountCodeRepository;
-// import com.example.demo.service.DiscountCodeService;
-
-// @Service
-// public class DiscountCodeServiceImpl implements DiscountCodeService {
-
-//     @Autowired
-//     DiscountCodeRepository repo;
-
-//     public DiscountCode insertCode(DiscountCode d) {
-//         return repo.save(d);
-//     }
-
-//     public Optional<DiscountCode> getCodeById(Long id) {
-//         return repo.findById(id);
-//     }
-
-//     public List<DiscountCode> getAllCodes() {
-//         return repo.findAll();
-//     }
-
-//     public void deactivateCode(Long id) {
-//         repo.findById(id).ifPresent(d -> d.setActive(false));
-//     }
-// }
-
-
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
-
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DiscountCode;
 import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.service.DiscountCodeService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DiscountCodeServiceImpl implements DiscountCodeService {
@@ -54,33 +17,39 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public DiscountCode getDiscountCodeById(Long id) {
-        return discountCodeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
-    }
-
-    @Override
-    public DiscountCode updateDiscountCode(Long id, DiscountCode updated) {
-        if (updated.getDiscountPercentage() < 0 || updated.getDiscountPercentage() > 100) {
-            throw new IllegalArgumentException("percentage");
+    public DiscountCode createDiscountCode(DiscountCode code) {
+        if (discountCodeRepository.findByCode(code.getCode()) != null) {
+            throw new RuntimeException("Duplicate discount code exists");
         }
-
-        DiscountCode code = discountCodeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
-
-        code.setCodeValue(updated.getCodeValue());
-        code.setDiscountPercentage(updated.getDiscountPercentage());
-
         return discountCodeRepository.save(code);
     }
 
     @Override
-    public List<DiscountCode> getCodesForInfluencer(Long influencerId) {
-        return discountCodeRepository.findByInfluencerId(influencerId);
+    public DiscountCode updateDiscountCode(Long id, DiscountCode code) {
+        DiscountCode existing = discountCodeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        return discountCodeRepository.save(existing);
     }
 
     @Override
-    public List<DiscountCode> getCodesForCampaign(Long campaignId) {
-        return discountCodeRepository.findByCampaignId(campaignId);
+    public DiscountCode getCodeById(Long id) {
+        return discountCodeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+    }
+
+    @Override
+    public List<DiscountCode> getCodesByInfluencer(Long influencerId) {
+        return discountCodeRepository.findAll();
+    }
+
+    @Override
+    public List<DiscountCode> getCodesByCampaign(Long campaignId) {
+        return discountCodeRepository.findAll();
+    }
+
+    @Override
+    public void deactivateCode(Long id) {
+        DiscountCode code = getCodeById(id);
+        discountCodeRepository.save(code);
     }
 }

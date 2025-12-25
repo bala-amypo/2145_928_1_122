@@ -1,34 +1,41 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Influencer;
 import com.example.demo.repository.InfluencerRepository;
 import com.example.demo.service.InfluencerService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class InfluencerServiceImpl implements InfluencerService {
 
     private final InfluencerRepository influencerRepository;
 
-    // ✅ Constructor injection (REQUIRED)
     public InfluencerServiceImpl(InfluencerRepository influencerRepository) {
         this.influencerRepository = influencerRepository;
     }
 
-    // ✅ Correct method name + duplicate check
     @Override
     public Influencer createInfluencer(Influencer influencer) {
-
-        influencerRepository.findBySocialHandle(influencer.getSocialHandle())
-                .ifPresent(i -> {
-                    throw new RuntimeException("Duplicate social handle");
-                });
-
+        if (influencerRepository.findBySocialHandle(influencer.getSocialHandle()) != null) {
+            throw new RuntimeException("Duplicate influencer exists");
+        }
         return influencerRepository.save(influencer);
+    }
+
+    @Override
+    public Influencer updateInfluencer(Long id, Influencer influencer) {
+        Influencer existing = influencerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        existing.setSocialHandle(influencer.getSocialHandle());
+        return influencerRepository.save(existing);
+    }
+
+    @Override
+    public Influencer getInfluencerById(Long id) {
+        return influencerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
     @Override
@@ -36,11 +43,10 @@ public class InfluencerServiceImpl implements InfluencerService {
         return influencerRepository.findAll();
     }
 
-    // ✅ Must return Influencer, not Optional
     @Override
-    public Influencer getInfluencerById(Long id) {
-        return influencerRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Influencer not found"));
+    public void deactivateInfluencer(Long id) {
+        Influencer influencer = getInfluencerById(id);
+        influencer.setActive(false);
+        influencerRepository.save(influencer);
     }
 }
