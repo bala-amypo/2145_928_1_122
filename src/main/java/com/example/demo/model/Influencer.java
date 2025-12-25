@@ -1,31 +1,48 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Influencer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    @Column(unique = true)
     private String socialHandle;
+    private boolean active = true;
 
-    private Boolean active = true;
+    public Influencer() {}
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getSocialHandle() { return socialHandle; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSocialHandle() {
+        return socialHandle;
+    }
+
     public void setSocialHandle(String socialHandle) {
         this.socialHandle = socialHandle;
     }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

@@ -1,48 +1,68 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 public class RoiReport {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    private Campaign campaign;
-
-    @ManyToOne
-    private Influencer influencer;
 
     private BigDecimal totalSales;
     private BigDecimal totalRevenue;
     private BigDecimal roiPercentage;
 
-    private LocalDateTime generatedAt;
+    private int totalTransactions;
 
-    @PrePersist
-    void onCreate() {
-        generatedAt = LocalDateTime.now();
+    @ManyToOne
+    private DiscountCode discountCode;
+
+    public RoiReport() {}
+
+    public Long getId() {
+        return id;
     }
 
-    // ✅ GETTERS & SETTERS
-    public Long getId() { return id; }
+    public BigDecimal getTotalSales() {
+        return totalSales;
+    }
 
-    public BigDecimal getTotalSales() { return totalSales; }
     public void setTotalSales(BigDecimal totalSales) {
         this.totalSales = totalSales;
     }
 
-    public BigDecimal getTotalRevenue() { return totalRevenue; }
+    public BigDecimal getTotalRevenue() {
+        return totalRevenue;
+    }
+
     public void setTotalRevenue(BigDecimal totalRevenue) {
         this.totalRevenue = totalRevenue;
     }
 
-    public BigDecimal getRoiPercentage() { return roiPercentage; }
+    public BigDecimal getRoiPercentage() {
+        return roiPercentage;
+    }
+
     public void setRoiPercentage(BigDecimal roiPercentage) {
         this.roiPercentage = roiPercentage;
+    }
+
+    public int getTotalTransactions() {
+        return totalTransactions;
+    }
+
+    public void setTotalTransactions(int totalTransactions) {
+        this.totalTransactions = totalTransactions;
+    }
+
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
     }
 }

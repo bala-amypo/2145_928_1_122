@@ -6,20 +6,54 @@ import jakarta.persistence.*;
 public class DiscountCode {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String code;
+    private double discountPercentage;
 
-    public Long getId() { return id; }
+    @ManyToOne
+    private Influencer influencer;
 
-    // Original
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
+    @ManyToOne
+    private Campaign campaign;
 
-    // TEST EXPECTS THESE 👇
-    public String getCodeValue() { return code; }
-    public void setCodeValue(String codeValue) {
-        this.code = codeValue;
+    public DiscountCode() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    // Required by tests
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public Influencer getInfluencer() {
+        return influencer;
+    }
+
+    public void setInfluencer(Influencer influencer) {
+        this.influencer = influencer;
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
     }
 }
