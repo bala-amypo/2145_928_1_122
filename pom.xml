@@ -21,33 +21,6 @@
     </properties>
 
     <dependencies>
-<!-- Mockito -->
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-core</artifactId>
-    <version>5.12.0</version>
-    <scope>test</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-inline</artifactId>
-    <version>5.12.0</version>
-    <scope>test</scope>
-</dependency>
-
-<!-- Spring test support -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-test</artifactId>
-    <scope>test</scope>
-    <exclusions>
-        <exclusion>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-        </exclusion>
-    </exclusions>
-</dependency>
 
         <!-- Spring -->
         <dependency>
@@ -65,7 +38,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- H2 (required for platform) -->
+        <!-- H2 (platform compatible) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -98,12 +71,33 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- ✅ TestNG (MANDATORY) -->
+        <!-- TestNG (REQUIRED by tests) -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.10.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito (ONLY core, no inline) -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.12.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -116,7 +110,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- REQUIRED for TestNG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
