@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Influencer {
@@ -15,19 +14,12 @@ public class Influencer {
     @Column(unique = true)
     private String socialHandle;
 
-    private String email;
-
     private Boolean active = true;
 
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    // ✅ GETTERS & SETTERS
     public Long getId() { return id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getSocialHandle() { return socialHandle; }
     public void setSocialHandle(String socialHandle) {
@@ -35,7 +27,5 @@ public class Influencer {
     }
 
     public Boolean getActive() { return active; }
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public void setActive(Boolean active) { this.active = active; }
 }
