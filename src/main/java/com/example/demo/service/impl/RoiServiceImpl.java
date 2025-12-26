@@ -10,6 +10,7 @@ import com.example.demo.service.RoiService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,30 +45,34 @@ public class RoiServiceImpl implements RoiService {
             totalTransactions++;
         }
 
-        // ROI calculation (simple & test-friendly)
-        BigDecimal roiPercentage =
-                totalTransactions == 0
-                        ? BigDecimal.ZERO
-                        : totalSales.divide(BigDecimal.valueOf(totalTransactions), 2, BigDecimal.ROUND_HALF_UP);
+        double roi =
+                totalTransactions == 0 ? 0.0 :
+                        totalSales.doubleValue() / totalTransactions;
 
         RoiReport report = new RoiReport();
         report.setDiscountCode(code);
-        report.setTotalSales(totalSales);           // BigDecimal
-        report.setTotalRevenue(totalSales);         // BigDecimal
+        report.setTotalSales(totalSales);
+        report.setTotalRevenue(totalSales);
         report.setTotalTransactions(totalTransactions);
-        report.setRoiPercentage(roiPercentage.doubleValue()); // ✅ FIX 3
+        report.setRoiPercentage(roi);
 
         return roiReportRepository.save(report);
     }
+
+    // 🔹 REQUIRED BY INTERFACE
+    @Override
+    public List<RoiReport> generateReportForInfluencer(Long influencerId) {
+        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
+    }
+    @Override
+public List<RoiReport> getReportsForInfluencer(Long influencerId) {
+    return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
+}
+
 
     @Override
     public RoiReport getReportById(Long reportId) {
         return roiReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("ROI report not found"));
-    }
-
-    @Override
-    public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
     }
 }
