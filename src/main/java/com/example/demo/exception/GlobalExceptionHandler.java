@@ -5,42 +5,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleNotFound(
+    public ResponseEntity<String> handleNotFound(
             ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("success", false);
-        body.put("message", ex.getMessage());
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<String> handleDuplicate(
+            DuplicateResourceException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    @ExceptionHandler(InvalidDateException.class)
+    public ResponseEntity<String> handleInvalidDate(
+            InvalidDateException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleBadRequest(
+    public ResponseEntity<String> handleIllegalArgument(
             IllegalArgumentException ex) {
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("success", false);
-        body.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneral(
-            Exception ex) {
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("success", false);
-        body.put("message", "Internal server error");
-
-        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
