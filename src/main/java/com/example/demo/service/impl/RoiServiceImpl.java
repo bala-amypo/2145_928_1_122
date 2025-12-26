@@ -27,15 +27,17 @@ public class RoiServiceImpl implements RoiService {
         this.discountCodeRepository = discountCodeRepository;
     }
 
+    // 🔹 STRING → LONG (TEST FIX)
     @Override
-    public RoiReport generateReportForCode(Long discountCodeId) {
+    public RoiReport generateReportForCode(String discountCodeId) {
 
-        DiscountCode code = discountCodeRepository.findById(discountCodeId)
+        Long codeId = Long.valueOf(discountCodeId);
+
+        DiscountCode code = discountCodeRepository.findById(codeId)
                 .orElseThrow(() -> new RuntimeException("Discount code not found"));
 
-        // ✅ FIXED METHOD NAME HERE
         List<SaleTransaction> sales =
-                saleTransactionRepository.findByDiscountCode_Id(discountCodeId);
+                saleTransactionRepository.findByDiscountCode_Id(codeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
         int totalTransactions = 0;
@@ -46,9 +48,7 @@ public class RoiServiceImpl implements RoiService {
         }
 
         double roiPercentage =
-                totalTransactions == 0
-                        ? 0.0
-                        : totalSales.doubleValue() / totalTransactions;
+                totalTransactions == 0 ? 0.0 : totalSales.doubleValue() / totalTransactions;
 
         RoiReport report = new RoiReport();
         report.setDiscountCode(code);
@@ -61,18 +61,14 @@ public class RoiServiceImpl implements RoiService {
     }
 
     @Override
-    public RoiReport getReportById(Long reportId) {
-        return roiReportRepository.findById(reportId)
+    public RoiReport getReportById(String reportId) {
+        return roiReportRepository.findById(Long.valueOf(reportId))
                 .orElseThrow(() -> new RuntimeException("ROI report not found"));
     }
 
     @Override
-    public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
-    }
-
-    @Override
-    public List<RoiReport> generateReportForInfluencer(Long influencerId) {
-        return getReportsForInfluencer(influencerId);
+    public List<RoiReport> getReportsForInfluencer(String influencerId) {
+        return roiReportRepository
+                .findByDiscountCodeInfluencerId(Long.valueOf(influencerId));
     }
 }

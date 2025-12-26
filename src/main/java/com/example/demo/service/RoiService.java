@@ -5,12 +5,10 @@ import java.util.List;
 
 public interface RoiService {
 
-    RoiReport generateReportForCode(Long discountCodeId);
+    // 🔹 TEST CALLS STRING
+    RoiReport generateReportForCode(String discountCodeId);
 
-    List<RoiReport> generateReportForInfluencer(Long influencerId);
+    RoiReport getReportById(String reportId);
 
-    // 🔹 REQUIRED BY CONTROLLER
-    List<RoiReport> getReportsForInfluencer(Long influencerId);
-
-    RoiReport getReportById(Long reportId);
+    List<RoiReport> getReportsForInfluencer(String influencerId);
 }
