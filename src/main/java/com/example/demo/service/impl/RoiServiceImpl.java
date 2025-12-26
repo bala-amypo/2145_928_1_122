@@ -10,7 +10,6 @@ import com.example.demo.service.RoiService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,8 +33,9 @@ public class RoiServiceImpl implements RoiService {
         DiscountCode code = discountCodeRepository.findById(discountCodeId)
                 .orElseThrow(() -> new RuntimeException("Discount code not found"));
 
+        // ✅ FIXED METHOD NAME HERE
         List<SaleTransaction> sales =
-                saleTransactionRepository.findByDiscountCodeId(discountCodeId);
+                saleTransactionRepository.findByDiscountCode_Id(discountCodeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
         int totalTransactions = 0;
@@ -45,34 +45,34 @@ public class RoiServiceImpl implements RoiService {
             totalTransactions++;
         }
 
-        double roi =
-                totalTransactions == 0 ? 0.0 :
-                        totalSales.doubleValue() / totalTransactions;
+        double roiPercentage =
+                totalTransactions == 0
+                        ? 0.0
+                        : totalSales.doubleValue() / totalTransactions;
 
         RoiReport report = new RoiReport();
         report.setDiscountCode(code);
         report.setTotalSales(totalSales);
         report.setTotalRevenue(totalSales);
         report.setTotalTransactions(totalTransactions);
-        report.setRoiPercentage(roi);
+        report.setRoiPercentage(roiPercentage);
 
         return roiReportRepository.save(report);
     }
-
-    // 🔹 REQUIRED BY INTERFACE
-    @Override
-    public List<RoiReport> generateReportForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
-    }
-    @Override
-public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-    return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
-}
-
 
     @Override
     public RoiReport getReportById(Long reportId) {
         return roiReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("ROI report not found"));
+    }
+
+    @Override
+    public List<RoiReport> getReportsForInfluencer(Long influencerId) {
+        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
+    }
+
+    @Override
+    public List<RoiReport> generateReportForInfluencer(Long influencerId) {
+        return getReportsForInfluencer(influencerId);
     }
 }

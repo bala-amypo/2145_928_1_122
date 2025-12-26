@@ -16,14 +16,18 @@ public class RoiReportController {
         this.roiService = roiService;
     }
 
-    @PostMapping("/influencer/{influencerId}")
-    public RoiReport generate(@PathVariable Long influencerId) {
-        return roiService.generateReportForInfluencer(influencerId);
+    @PostMapping("/code/{codeId}")
+    public RoiReport generateForCode(@PathVariable Long codeId) {
+        return roiService.generateReportForCode(codeId);
     }
 
     @GetMapping("/influencer/{influencerId}")
-    public List<RoiReport> getForInfluencer(
-            @PathVariable Long influencerId) {
+    public List<RoiReport> getForInfluencer(@PathVariable Long influencerId) {
         return roiService.getReportsForInfluencer(influencerId);
+    }
+
+    @GetMapping("/{id}")
+    public RoiReport getById(@PathVariable Long id) {
+        return roiService.getReportById(id);
     }
 }
