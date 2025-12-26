@@ -14,9 +14,11 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder,
-                           JwtUtil jwtUtil) {
+    public UserServiceImpl(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            JwtUtil jwtUtil
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -25,26 +27,36 @@ public class UserServiceImpl implements UserService {
     // ================= REGISTER =================
     @Override
     public User register(User user) {
+
+        // encrypt password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 
     // ================= LOGIN =================
     @Override
-    public String login(String email, String password) {
+    public String login(String email, String rawPassword) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Invalid email"));
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
-        // ✅ CORRECT TOKEN GENERATION
+        // ✅ CORRECT JWT METHOD CALL
         return jwtUtil.generateToken(
                 user.getId(),
                 user.getEmail(),
                 user.getRole()
         );
+    }
+
+    // ================= FIND USER =================
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
