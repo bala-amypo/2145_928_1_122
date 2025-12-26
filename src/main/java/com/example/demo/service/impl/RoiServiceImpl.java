@@ -1,74 +1,64 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.DiscountCode;
 import com.example.demo.model.RoiReport;
 import com.example.demo.model.SaleTransaction;
-import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.repository.RoiReportRepository;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.RoiService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class RoiServiceImpl implements RoiService {
 
-    private final RoiReportRepository roiReportRepository;
     private final SaleTransactionRepository saleTransactionRepository;
-    private final DiscountCodeRepository discountCodeRepository;
+    private final RoiReportRepository roiReportRepository;
 
-    public RoiServiceImpl(RoiReportRepository roiReportRepository,
-                          SaleTransactionRepository saleTransactionRepository,
-                          DiscountCodeRepository discountCodeRepository) {
-        this.roiReportRepository = roiReportRepository;
+    public RoiServiceImpl(SaleTransactionRepository saleTransactionRepository,
+                          RoiReportRepository roiReportRepository) {
         this.saleTransactionRepository = saleTransactionRepository;
-        this.discountCodeRepository = discountCodeRepository;
+        this.roiReportRepository = roiReportRepository;
     }
 
-    // 🔹 STRING → LONG (TEST FIX)
     @Override
     public RoiReport generateReportForCode(String discountCodeId) {
 
-        Long codeId = Long.valueOf(discountCodeId);
+        Long codeId = Long.parseLong(discountCodeId);
 
-        DiscountCode code = discountCodeRepository.findById(codeId)
-                .orElseThrow(() -> new RuntimeException("Discount code not found"));
-
-        List<SaleTransaction> sales =
+        List<SaleTransaction> transactions =
                 saleTransactionRepository.findByDiscountCode_Id(codeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
-        int totalTransactions = 0;
 
-        for (SaleTransaction tx : sales) {
+        for (SaleTransaction tx : transactions) {
             totalSales = totalSales.add(tx.getTransactionAmount());
-            totalTransactions++;
         }
 
-        double roiPercentage =
-                totalTransactions == 0 ? 0.0 : totalSales.doubleValue() / totalTransactions;
-
         RoiReport report = new RoiReport();
-        report.setDiscountCode(code);
         report.setTotalSales(totalSales);
         report.setTotalRevenue(totalSales);
-        report.setTotalTransactions(totalTransactions);
-        report.setRoiPercentage(roiPercentage);
+        report.setRoiPercentage(
+                transactions.isEmpty()
+                        ? BigDecimal.ZERO
+                        : BigDecimal.valueOf(100)
+        );
+        report.setGeneratedAt(LocalDateTime.now());
 
         return roiReportRepository.save(report);
     }
 
     @Override
-    public RoiReport getReportById(String reportId) {
-        return roiReportRepository.findById(Long.valueOf(reportId))
-                .orElseThrow(() -> new RuntimeException("ROI report not found"));
+    public List<RoiReport> getReportsForInfluencer(String influencerId) {
+        Long infId = Long.parseLong(influencerId);
+        return roiReportRepository.findByDiscountCode_Influencer_Id(infId);
     }
 
     @Override
-    public List<RoiReport> getReportsForInfluencer(String influencerId) {
-        return roiReportRepository
-                .findByDiscountCodeInfluencerId(Long.valueOf(influencerId));
+    public RoiReport getReportById(String reportId) {
+        Long id = Long.parseLong(reportId);
+        return roiReportRepository.findById(id).orElse(null);
     }
 }

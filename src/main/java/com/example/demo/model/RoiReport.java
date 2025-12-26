@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 public class RoiReport {
@@ -10,26 +11,21 @@ public class RoiReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private BigDecimal totalSales;
+
+    private BigDecimal totalRevenue;
+
+    private BigDecimal roiPercentage;
+
+    private LocalDateTime generatedAt;
+
     @ManyToOne
     private DiscountCode discountCode;
 
-    private BigDecimal totalSales;
-    private BigDecimal totalRevenue;   // 🔹 REQUIRED
-    private Integer totalTransactions;
-    private Double roiPercentage;
-
-    // ---- getters & setters ----
+    // ✅ getters & setters
 
     public Long getId() {
         return id;
-    }
-
-    public DiscountCode getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
     }
 
     public BigDecimal getTotalSales() {
@@ -40,33 +36,35 @@ public class RoiReport {
         this.totalSales = totalSales;
     }
 
-    // 🔹 ALLOW double from tests
-    public void setTotalSales(double value) {
-        this.totalSales = BigDecimal.valueOf(value);
-    }
-
     public BigDecimal getTotalRevenue() {
         return totalRevenue;
     }
 
-    // 🔹 REQUIRED BY RoiServiceImpl
     public void setTotalRevenue(BigDecimal totalRevenue) {
         this.totalRevenue = totalRevenue;
     }
 
-    public Integer getTotalTransactions() {
-        return totalTransactions;
-    }
-
-    public void setTotalTransactions(Integer totalTransactions) {
-        this.totalTransactions = totalTransactions;
-    }
-
-    public Double getRoiPercentage() {
+    public BigDecimal getRoiPercentage() {
         return roiPercentage;
     }
 
-    public void setRoiPercentage(Double roiPercentage) {
+    public void setRoiPercentage(BigDecimal roiPercentage) {
         this.roiPercentage = roiPercentage;
+    }
+
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
+
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
+    }
+
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
     }
 }

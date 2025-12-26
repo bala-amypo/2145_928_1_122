@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface RoiReportRepository extends JpaRepository<RoiReport, Long> {
 
-    // 🔹 REQUIRED BY RoiServiceImpl
-    List<RoiReport> findByDiscountCodeInfluencerId(Long influencerId);
+    List<RoiReport> findByDiscountCode_Influencer_Id(Long influencerId);
 }

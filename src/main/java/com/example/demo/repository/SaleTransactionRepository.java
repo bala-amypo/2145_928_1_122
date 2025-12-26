@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface SaleTransactionRepository extends JpaRepository<SaleTransaction, Long> {
 
-    // 🔹 REQUIRED BY SaleTransactionServiceImpl
     List<SaleTransaction> findByDiscountCode_Id(Long discountCodeId);
 
     List<SaleTransaction> findByDiscountCode_Influencer_Id(Long influencerId);
