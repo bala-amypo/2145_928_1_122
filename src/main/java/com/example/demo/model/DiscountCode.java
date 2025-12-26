@@ -9,15 +9,32 @@ public class DiscountCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String codeValue;
-
+    private String code;
     private Double discountPercentage;
 
-    public String getCodeValue() {
-        return codeValue;
+    // ---------- getters & setters ----------
+
+    public Long getId() {
+        return id;
     }
 
-    public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCodeValue(String code) {
+        this.code = code;
+    }
+
+    public String getCodeValue() {
+        return code;
+    }
+
+    public Double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(Double discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 }

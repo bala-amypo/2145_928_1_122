@@ -11,16 +11,31 @@ public class SaleTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal transactionAmount;
+    private BigDecimal saleAmount;
+
     private Timestamp transactionDate;
+
     private Long customerId;
 
-    public BigDecimal getTransactionAmount() {
-        return transactionAmount;
+    @ManyToOne
+    private DiscountCode discountCode;
+
+    // ---------- getters & setters ----------
+
+    public Long getId() {
+        return id;
     }
 
-    public void setTransactionAmount(BigDecimal transactionAmount) {
-        this.transactionAmount = transactionAmount;
+    public BigDecimal getSaleAmount() {
+        return saleAmount;
+    }
+
+    public void setTransactionAmount(BigDecimal saleAmount) {
+        this.saleAmount = saleAmount;
+    }
+
+    public BigDecimal getTransactionAmount() {
+        return saleAmount;
     }
 
     public Timestamp getTransactionDate() {
@@ -37,5 +52,13 @@ public class SaleTransaction {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
     }
 }
