@@ -5,11 +5,6 @@ import java.util.List;
 
 public interface DiscountCodeService {
 
-    DiscountCode createDiscountCode(DiscountCode discountCode);
-
-    DiscountCode getDiscountCode(Long id);
-
-    // 🔹 REQUIRED BY TEST
     DiscountCode getDiscountCodeById(Long id);
 
     DiscountCode updateDiscountCode(Long id, DiscountCode discountCode);

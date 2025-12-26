@@ -7,10 +7,7 @@ public interface InfluencerService {
 
     Influencer createInfluencer(Influencer influencer);
 
-    List<Influencer> getAllInfluencers();
-
-    Influencer getInfluencer(Long id);
-
-    // 🔹 REQUIRED BY TEST
     Influencer getInfluencerById(Long id);
+
+    List<Influencer> getAllInfluencers();
 }
