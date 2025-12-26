@@ -17,12 +17,15 @@ public class RoiReport {
 
     private BigDecimal roiPercentage;
 
+    // 🔴 REQUIRED BY TEST
+    private int totalTransactions;
+
     private LocalDateTime generatedAt;
 
     @ManyToOne
     private DiscountCode discountCode;
 
-    // ✅ getters & setters
+    // ---------- GETTERS & SETTERS ----------
 
     public Long getId() {
         return id;
@@ -48,8 +51,23 @@ public class RoiReport {
         return roiPercentage;
     }
 
+    // 🔴 REQUIRED (test passes double)
+    public void setRoiPercentage(double roiPercentage) {
+        this.roiPercentage = BigDecimal.valueOf(roiPercentage);
+    }
+
+    // optional (safe to keep)
     public void setRoiPercentage(BigDecimal roiPercentage) {
         this.roiPercentage = roiPercentage;
+    }
+
+    // 🔴 REQUIRED BY TEST
+    public int getTotalTransactions() {
+        return totalTransactions;
+    }
+
+    public void setTotalTransactions(int totalTransactions) {
+        this.totalTransactions = totalTransactions;
     }
 
     public LocalDateTime getGeneratedAt() {
