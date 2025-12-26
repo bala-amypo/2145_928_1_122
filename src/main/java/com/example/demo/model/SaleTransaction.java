@@ -1,64 +1,22 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Entity
 public class SaleTransaction {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private BigDecimal saleAmount;
-
+    private BigDecimal transactionAmount;
     private Timestamp transactionDate;
-
+    private DiscountCode discountCode;
     private Long customerId;
 
-    @ManyToOne
-    private DiscountCode discountCode;
+    public BigDecimal getTransactionAmount() { return transactionAmount; }
+    public Timestamp getTransactionDate() { return transactionDate; }
+    public DiscountCode getDiscountCode() { return discountCode; }
+    public Long getCustomerId() { return customerId; }
 
-    // ---------- getters & setters ----------
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getSaleAmount() {
-        return saleAmount;
-    }
-
-    public void setTransactionAmount(BigDecimal saleAmount) {
-        this.saleAmount = saleAmount;
-    }
-
-    public BigDecimal getTransactionAmount() {
-        return saleAmount;
-    }
-
-    public Timestamp getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public DiscountCode getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
-    }
+    public void setTransactionAmount(BigDecimal transactionAmount) { this.transactionAmount = transactionAmount; }
+    public void setTransactionDate(Timestamp transactionDate) { this.transactionDate = transactionDate; }
+    public void setDiscountCode(DiscountCode discountCode) { this.discountCode = discountCode; }
+    public void setCustomerId(Long customerId) { this.customerId = customerId; }
 }

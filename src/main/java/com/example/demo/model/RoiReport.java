@@ -1,140 +1,20 @@
-// package com.example.demo.model;
-
-// import jakarta.persistence.*;
-// import java.math.BigDecimal;
-// import java.time.LocalDateTime;
-
-// @Entity
-// public class RoiReport {
-
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-
-//     private BigDecimal totalSales;
-
-//     private BigDecimal totalRevenue;
-
-//     private BigDecimal roiPercentage;
-
-//     // 🔴 REQUIRED BY TEST
-//     private int totalTransactions;
-
-//     private LocalDateTime generatedAt;
-
-//     @ManyToOne
-//     private DiscountCode discountCode;
-
-//     // ---------- GETTERS & SETTERS ----------
-
-//     public Long getId() {
-//         return id;
-//     }
-
-//     public BigDecimal getTotalSales() {
-//         return totalSales;
-//     }
-
-//     public void setTotalSales(BigDecimal totalSales) {
-//         this.totalSales = totalSales;
-//     }
-
-//     public BigDecimal getTotalRevenue() {
-//         return totalRevenue;
-//     }
-
-//     public void setTotalRevenue(BigDecimal totalRevenue) {
-//         this.totalRevenue = totalRevenue;
-//     }
-
-//     public BigDecimal getRoiPercentage() {
-//         return roiPercentage;
-//     }
-
-//     // 🔴 REQUIRED (test passes double)
-//     public void setRoiPercentage(double roiPercentage) {
-//         this.roiPercentage = BigDecimal.valueOf(roiPercentage);
-//     }
-
-//     // optional (safe to keep)
-//     public void setRoiPercentage(BigDecimal roiPercentage) {
-//         this.roiPercentage = roiPercentage;
-//     }
-
-//     // 🔴 REQUIRED BY TEST
-//     public int getTotalTransactions() {
-//         return totalTransactions;
-//     }
-
-//     public void setTotalTransactions(int totalTransactions) {
-//         this.totalTransactions = totalTransactions;
-//     }
-
-//     public LocalDateTime getGeneratedAt() {
-//         return generatedAt;
-//     }
-
-//     public void setGeneratedAt(LocalDateTime generatedAt) {
-//         this.generatedAt = generatedAt;
-//     }
-
-//     public DiscountCode getDiscountCode() {
-//         return discountCode;
-//     }
-
-//     public void setDiscountCode(DiscountCode discountCode) {
-//         this.discountCode = discountCode;
-//     }
-// }
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
 public class RoiReport {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private BigDecimal totalSales;
-
-    private BigDecimal totalRevenue;
-
-    private double roiPercentage;     // ✅ double (NOT BigDecimal)
-
-    private int totalTransactions;    // ✅ REQUIRED BY TEST
-
-    private LocalDateTime generatedAt;
-
-    @ManyToOne
+    private int totalTransactions;
+    private double roiPercentage;
     private DiscountCode discountCode;
 
-    public Long getId() { return id; }
-
     public BigDecimal getTotalSales() { return totalSales; }
-    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
-
-    public BigDecimal getTotalRevenue() { return totalRevenue; }
-    public void setTotalRevenue(BigDecimal totalRevenue) { this.totalRevenue = totalRevenue; }
-
-    public double getRoiPercentage() { return roiPercentage; }
-    public void setRoiPercentage(double roiPercentage) { this.roiPercentage = roiPercentage; }
-
     public int getTotalTransactions() { return totalTransactions; }
-    public void setTotalTransactions(int totalTransactions) {
-        this.totalTransactions = totalTransactions;
-    }
-
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
-    public void setGeneratedAt(LocalDateTime generatedAt) {
-        this.generatedAt = generatedAt;
-    }
-
+    public double getRoiPercentage() { return roiPercentage; }
     public DiscountCode getDiscountCode() { return discountCode; }
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
-    }
+
+    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
+    public void setTotalTransactions(int totalTransactions) { this.totalTransactions = totalTransactions; }
+    public void setRoiPercentage(double roiPercentage) { this.roiPercentage = roiPercentage; }
+    public void setDiscountCode(DiscountCode discountCode) { this.discountCode = discountCode; }
 }
