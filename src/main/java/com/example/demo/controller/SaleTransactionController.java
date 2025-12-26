@@ -11,19 +11,19 @@ import java.util.List;
 @RequestMapping("/sales")
 public class SaleTransactionController {
 
-    private final SaleTransactionService saleService;
+    private final SaleTransactionService saleTransactionService;
 
-    public SaleTransactionController(SaleTransactionService saleService) {
-        this.saleService = saleService;
+    public SaleTransactionController(SaleTransactionService saleTransactionService) {
+        this.saleTransactionService = saleTransactionService;
     }
 
     @PostMapping
     public ResponseEntity<SaleTransaction> createSale(@RequestBody SaleTransaction tx) {
-        return ResponseEntity.ok(saleService.createSale(tx));
+        return ResponseEntity.ok(saleTransactionService.createSale(tx));
     }
 
-    @GetMapping("/code/{codeId}")
-    public ResponseEntity<List<SaleTransaction>> getSalesForCode(@PathVariable Long codeId) {
-        return ResponseEntity.ok(saleService.getSalesForCode(codeId));
+    @GetMapping("/code/{id}")
+    public ResponseEntity<List<SaleTransaction>> getSalesForCode(@PathVariable Long id) {
+        return ResponseEntity.ok(saleTransactionService.getSalesForCode(id));
     }
 }

@@ -17,11 +17,6 @@ public class CampaignController {
         this.campaignService = campaignService;
     }
 
-    @PostMapping
-    public ResponseEntity<Campaign> createCampaign(@RequestBody Campaign campaign) {
-        return ResponseEntity.ok(campaignService.createCampaign(campaign));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Campaign> updateCampaign(@PathVariable Long id,
                                                    @RequestBody Campaign campaign) {
@@ -30,7 +25,7 @@ public class CampaignController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Campaign> getCampaign(@PathVariable Long id) {
-        return ResponseEntity.ok(campaignService.getCampaign(id));
+        return ResponseEntity.ok(campaignService.getCampaignById(id));
     }
 
     @GetMapping
