@@ -7,8 +7,6 @@ import com.example.demo.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -24,7 +22,6 @@ public class UserServiceImpl implements UserService {
         this.jwtUtil = jwtUtil;
     }
 
-    // ✅ REGISTER
     @Override
     public User registerUser(String fullName, String email, String password, String role) {
 
@@ -33,12 +30,10 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
-        user.setCreatedAt(LocalDateTime.now());
 
         return userRepository.save(user);
     }
 
-    // ✅ LOGIN (THIS WAS MISSING / WRONG BEFORE)
     @Override
     public String login(String email, String password) {
 
@@ -49,10 +44,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid password");
         }
 
-        return jwtUtil.generateToken(
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
+        // ✅ TOKEN GENERATED HERE
+        return jwtUtil.generateToken(user.getEmail(), user.getRole());
     }
 }

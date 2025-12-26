@@ -2,13 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.LoginResponse;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
 
     private final UserService userService;
@@ -17,17 +17,19 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // ================= REGISTER =================
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
+    public User register(@RequestBody User user) {
 
         return userService.registerUser(
-                request.getFullName(),
-                request.getEmail(),
-                request.getPassword(),
-                request.getRole()
+                user.getFullName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getRole()
         );
     }
 
+    // ================= LOGIN =================
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
 
@@ -36,6 +38,7 @@ public class AuthController {
                 request.getPassword()
         );
 
+        // ✅ RETURN TOKEN IN RESPONSE BODY
         return new LoginResponse(token);
     }
 }
