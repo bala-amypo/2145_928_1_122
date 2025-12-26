@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Influencer;
 import com.example.demo.repository.InfluencerRepository;
 import com.example.demo.service.InfluencerService;
@@ -19,10 +18,6 @@ public class InfluencerServiceImpl implements InfluencerService {
 
     @Override
     public Influencer createInfluencer(Influencer influencer) {
-        influencerRepository.findBySocialHandle(influencer.getSocialHandle())
-                .ifPresent(i -> {
-                    throw new RuntimeException("Duplicate social handle");
-                });
         return influencerRepository.save(influencer);
     }
 
@@ -31,10 +26,9 @@ public class InfluencerServiceImpl implements InfluencerService {
         return influencerRepository.findAll();
     }
 
+    // 🔹 ADD THIS
     @Override
-    public Influencer getInfluencerById(Long id) {
-        return influencerRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Influencer not found"));
+    public Influencer getInfluencer(Long id) {
+        return influencerRepository.findById(id).orElse(null);
     }
 }

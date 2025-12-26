@@ -9,5 +9,6 @@ public interface InfluencerService {
 
     List<Influencer> getAllInfluencers();
 
-    Influencer getInfluencerById(Long id);
+    // 🔹 ADD THIS
+    Influencer getInfluencer(Long id);
 }
