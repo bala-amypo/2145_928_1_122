@@ -10,41 +10,33 @@ public class RoiReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal totalSales;
-    private BigDecimal totalRevenue;
-    private BigDecimal roiPercentage;
-    private Integer totalTransactions;
+    @ManyToOne
+    private DiscountCode discountCode;
 
-    // ---------- getters & setters ----------
+    private BigDecimal totalSales;
+    private Integer totalTransactions;
+    private Double roiPercentage;
+
+    // ---- getters & setters ----
+
+    public Long getId() {
+        return id;
+    }
+
+    public DiscountCode getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
+    }
 
     public BigDecimal getTotalSales() {
         return totalSales;
     }
 
-    // 🔹 Accept BigDecimal
     public void setTotalSales(BigDecimal totalSales) {
         this.totalSales = totalSales;
-    }
-
-    // 🔹 Accept double (TEST USES DOUBLE)
-    public void setTotalSales(double totalSales) {
-        this.totalSales = BigDecimal.valueOf(totalSales);
-    }
-
-    public BigDecimal getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(BigDecimal totalRevenue) {
-        this.totalRevenue = totalRevenue;
-    }
-
-    public BigDecimal getRoiPercentage() {
-        return roiPercentage;
-    }
-
-    public void setRoiPercentage(BigDecimal roiPercentage) {
-        this.roiPercentage = roiPercentage;
     }
 
     public Integer getTotalTransactions() {
@@ -53,5 +45,17 @@ public class RoiReport {
 
     public void setTotalTransactions(Integer totalTransactions) {
         this.totalTransactions = totalTransactions;
+    }
+
+    public Double getRoiPercentage() {
+        return roiPercentage;
+    }
+    public void setTotalSales(double value) {
+    this.totalSales = BigDecimal.valueOf(value);
+}
+
+
+    public void setRoiPercentage(Double roiPercentage) {
+        this.roiPercentage = roiPercentage;
     }
 }
