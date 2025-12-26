@@ -3,6 +3,9 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "discount_codes", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "code")
+})
 public class DiscountCode {
 
     @Id
@@ -10,50 +13,37 @@ public class DiscountCode {
     private Long id;
 
     private String code;
-    private double discountPercentage;
+
+    private Double discountPercentage;
+
+    private Boolean active = true;
 
     @ManyToOne
+    @JoinColumn(name = "influencer_id")
     private Influencer influencer;
 
     @ManyToOne
+    @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
     public DiscountCode() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    // Required by tests
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
+    public DiscountCode(String code, Double discountPercentage) {
         this.code = code;
-    }
-
-    public double getDiscountPercentage() {
-        return discountPercentage;
-    }
-
-    public void setDiscountPercentage(double discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
 
-    public Influencer getInfluencer() {
-        return influencer;
-    }
+    // getters and setters
+    public Long getId() { return id; }
+    public String getCode() { return code; }
+    public Double getDiscountPercentage() { return discountPercentage; }
+    public Boolean getActive() { return active; }
+    public Influencer getInfluencer() { return influencer; }
+    public Campaign getCampaign() { return campaign; }
 
-    public void setInfluencer(Influencer influencer) {
-        this.influencer = influencer;
-    }
-
-    public Campaign getCampaign() {
-        return campaign;
-    }
-
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
-    }
+    public void setCode(String code) { this.code = code; }
+    public void setDiscountPercentage(Double discountPercentage) { this.discountPercentage = discountPercentage; }
+    public void setActive(Boolean active) { this.active = active; }
+    public void setInfluencer(Influencer influencer) { this.influencer = influencer; }
+    public void setCampaign(Campaign campaign) { this.campaign = campaign; }
 }

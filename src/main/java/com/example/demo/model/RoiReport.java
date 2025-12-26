@@ -1,68 +1,49 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "roi_reports")
 public class RoiReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal totalSales;
-    private BigDecimal totalRevenue;
-    private BigDecimal roiPercentage;
-
-    private int totalTransactions;
+    @ManyToOne
+    private Campaign campaign;
 
     @ManyToOne
-    private DiscountCode discountCode;
+    private Influencer influencer;
+
+    private BigDecimal totalSales;
+
+    private BigDecimal totalRevenue;
+
+    private BigDecimal roiPercentage;
+
+    private LocalDateTime generatedAt;
 
     public RoiReport() {}
 
-    public Long getId() {
-        return id;
+    @PrePersist
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
     }
 
-    public BigDecimal getTotalSales() {
-        return totalSales;
-    }
+    // getters and setters
+    public Long getId() { return id; }
+    public Campaign getCampaign() { return campaign; }
+    public Influencer getInfluencer() { return influencer; }
+    public BigDecimal getTotalSales() { return totalSales; }
+    public BigDecimal getTotalRevenue() { return totalRevenue; }
+    public BigDecimal getRoiPercentage() { return roiPercentage; }
 
-    public void setTotalSales(BigDecimal totalSales) {
-        this.totalSales = totalSales;
-    }
-
-    public BigDecimal getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(BigDecimal totalRevenue) {
-        this.totalRevenue = totalRevenue;
-    }
-
-    public BigDecimal getRoiPercentage() {
-        return roiPercentage;
-    }
-
-    public void setRoiPercentage(BigDecimal roiPercentage) {
-        this.roiPercentage = roiPercentage;
-    }
-
-    public int getTotalTransactions() {
-        return totalTransactions;
-    }
-
-    public void setTotalTransactions(int totalTransactions) {
-        this.totalTransactions = totalTransactions;
-    }
-
-    public DiscountCode getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
-    }
+    public void setCampaign(Campaign campaign) { this.campaign = campaign; }
+    public void setInfluencer(Influencer influencer) { this.influencer = influencer; }
+    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
+    public void setTotalRevenue(BigDecimal totalRevenue) { this.totalRevenue = totalRevenue; }
+    public void setRoiPercentage(BigDecimal roiPercentage) { this.roiPercentage = roiPercentage; }
 }
