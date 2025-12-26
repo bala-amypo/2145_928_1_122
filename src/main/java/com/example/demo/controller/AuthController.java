@@ -4,7 +4,6 @@ import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.LoginResponse;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,30 +16,29 @@ public class AuthController {
         this.userService = userService;
     }
 
-    // REGISTER
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        return ResponseEntity.ok(userService.register(user));
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
 
-    // LOGIN
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request) {
 
+        // 🔹 generate JWT
         String token = userService.login(
                 request.getEmail(),
                 request.getPassword()
         );
 
+        // 🔹 fetch user
         User user = userService.findByEmail(request.getEmail());
 
-        return ResponseEntity.ok(
-                new LoginResponse(
-                        token,
-                        user.getId(),
-                        user.getEmail(),
-                        user.getRole()
-                )
+        // 🔹 RETURN RESPONSE BODY (THIS WAS MISSING / WRONG)
+        return new LoginResponse(
+                token,
+                user.getId(),
+                user.getEmail(),
+                user.getRole()
         );
     }
 }
