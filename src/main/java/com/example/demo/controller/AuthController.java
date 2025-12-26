@@ -36,7 +36,7 @@ public class AuthController {
     // =========================
     @PostMapping("/register")
     public User register(@RequestBody User user) {
-        return userService.register(user);
+        return userService.registerUser(user); // ✅ FIXED
     }
 
     // =========================
