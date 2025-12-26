@@ -23,11 +23,14 @@ public class RoiServiceImpl implements RoiService {
         this.roiReportRepository = roiReportRepository;
     }
 
+
     @Override
-    public RoiReport generateReportForCode(Long discountCodeId) {
+    public RoiReport generateReportForCode(String discountCodeId) {
+
+        Long codeId = Long.parseLong(discountCodeId);
 
         List<SaleTransaction> transactions =
-                saleTransactionRepository.findByDiscountCode_Id(discountCodeId);
+                saleTransactionRepository.findByDiscountCode_Id(codeId);
 
         BigDecimal totalSales = BigDecimal.ZERO;
 
@@ -39,7 +42,11 @@ public class RoiServiceImpl implements RoiService {
         report.setTotalSales(totalSales);
         report.setTotalRevenue(totalSales);
         report.setTotalTransactions(transactions.size());
-        report.setRoiPercentage(transactions.isEmpty() ? 0.0 : 100.0);
+        report.setRoiPercentage(
+                transactions.isEmpty()
+                        ? BigDecimal.ZERO
+                        : BigDecimal.valueOf(100)
+        );
         report.setGeneratedAt(LocalDateTime.now());
 
         if (!transactions.isEmpty()) {
@@ -49,18 +56,17 @@ public class RoiServiceImpl implements RoiService {
         return roiReportRepository.save(report);
     }
 
-    @Override
-    public List<RoiReport> generateReportForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCode_Influencer_Id(influencerId);
-    }
 
     @Override
-    public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCode_Influencer_Id(influencerId);
+    public List<RoiReport> getReportsForInfluencer(String influencerId) {
+        Long infId = Long.parseLong(influencerId);
+        return roiReportRepository.findByDiscountCode_Influencer_Id(infId);
     }
 
+
     @Override
-    public RoiReport getReportById(Long reportId) {
-        return roiReportRepository.findById(reportId).orElse(null);
+    public RoiReport getReportById(String reportId) {
+        Long id = Long.parseLong(reportId);
+        return roiReportRepository.findById(id).orElse(null);
     }
 }
