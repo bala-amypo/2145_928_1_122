@@ -1,62 +1,72 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public AuthController(UserService userService,
+    public AuthController(AuthenticationManager authenticationManager,
                           JwtUtil jwtUtil,
-                          PasswordEncoder passwordEncoder) {
-        this.userService = userService;
+                          UserRepository userRepository,
+                          UserService userService) {
+        this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
+    // =========================
+    // REGISTER
+    // =========================
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
-
-        User user = new User();
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
-
-        return userService.registerUser(user);
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
 
+    // =========================
+    // LOGIN
+    // =========================
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
+    public Map<String, Object> login(@RequestBody Map<String, String> request) {
 
-        User user = userService.findByEmail(request.getEmail());
+        String email = request.get("email");
+        String password = request.get("password");
 
-        if (!passwordEncoder.matches(
-                request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtUtil.generateToken(
                 user.getId(),
                 user.getEmail(),
-                user.getRole());
-
-        return new AuthResponse(
-                token,
-                user.getId(),
-                user.getEmail(),
                 user.getRole()
         );
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", "Bearer " + token);
+        response.put("userId", user.getId());
+        response.put("email", user.getEmail());
+        response.put("role", user.getRole());
+
+        return response;
     }
 }
