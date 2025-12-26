@@ -2,12 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.DiscountCode;
 import com.example.demo.service.DiscountCodeService;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/discount-codes")
 public class DiscountCodeController {
 
     private final DiscountCodeService discountCodeService;
@@ -16,26 +13,19 @@ public class DiscountCodeController {
         this.discountCodeService = discountCodeService;
     }
 
-    @GetMapping("/{id}")
-    public DiscountCode getById(@PathVariable Long id) {
+    public DiscountCode getDiscountCode(long id) {
         return discountCodeService.getDiscountCodeById(id);
     }
 
-    @PutMapping("/{id}")
-    public DiscountCode update(@PathVariable Long id,
-                               @RequestBody DiscountCode code) {
-        return discountCodeService.updateDiscountCode(id, code);
+    public DiscountCode updateDiscountCode(long id, DiscountCode dc) {
+        return discountCodeService.updateDiscountCode(id, dc);
     }
 
-    @GetMapping("/influencer/{influencerId}")
-    public List<DiscountCode> getForInfluencer(
-            @PathVariable Long influencerId) {
+    public List<DiscountCode> getCodesForInfluencer(long influencerId) {
         return discountCodeService.getCodesForInfluencer(influencerId);
     }
 
-    @GetMapping("/campaign/{campaignId}")
-    public List<DiscountCode> getForCampaign(
-            @PathVariable Long campaignId) {
+    public List<DiscountCode> getCodesForCampaign(long campaignId) {
         return discountCodeService.getCodesForCampaign(campaignId);
     }
 }

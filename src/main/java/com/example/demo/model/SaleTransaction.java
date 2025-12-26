@@ -2,42 +2,40 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "sale_transactions")
 public class SaleTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "discount_code_id")
-    private DiscountCode discountCode;
+    private BigDecimal transactionAmount;
+    private Timestamp transactionDate;
+    private Long customerId;
 
-    private BigDecimal saleAmount;
-
-    private LocalDateTime transactionDate;
-
-    public SaleTransaction() {}
-
-    public SaleTransaction(DiscountCode discountCode, BigDecimal saleAmount) {
-        this.discountCode = discountCode;
-        this.saleAmount = saleAmount;
+    public BigDecimal getTransactionAmount() {
+        return transactionAmount;
     }
 
-    @PrePersist
-    public void onCreate() {
-        this.transactionDate = LocalDateTime.now();
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
     }
 
-    // getters and setters
-    public Long getId() { return id; }
-    public DiscountCode getDiscountCode() { return discountCode; }
-    public BigDecimal getSaleAmount() { return saleAmount; }
-    public LocalDateTime getTransactionDate() { return transactionDate; }
+    public Timestamp getTransactionDate() {
+        return transactionDate;
+    }
 
-    public void setDiscountCode(DiscountCode discountCode) { this.discountCode = discountCode; }
-    public void setSaleAmount(BigDecimal saleAmount) { this.saleAmount = saleAmount; }
+    public void setTransactionDate(Timestamp transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 }
