@@ -1,8 +1,6 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,17 +8,13 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // 🔐 SECRET KEY (keep same everywhere)
-    private static final String SECRET_KEY = "mySecretKey12345";
+    private final String SECRET_KEY = "my-secret-key";
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 day
 
-    // ⏱ Token validity (24 hours)
-    private static final long EXPIRATION_TIME = 24 * 60 * 60 * 1000;
-
-    // ================= GENERATE TOKEN =================
     public String generateToken(Long userId, String email, String role) {
 
         return Jwts.builder()
-                .setSubject(email)                 // email as subject
+                .setSubject(email)
                 .claim("userId", userId)
                 .claim("role", role)
                 .setIssuedAt(new Date())
@@ -29,29 +23,14 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ================= EXTRACT EMAIL =================
     public String extractEmail(String token) {
-        return extractAllClaims(token).getSubject();
+        return getClaims(token).getSubject();
     }
 
-    // ================= EXTRACT CLAIMS =================
-    private Claims extractAllClaims(String token) {
+    private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    // ================= VALIDATE TOKEN =================
-    public boolean validateToken(String token, String email) {
-        String extractedEmail = extractEmail(token);
-        return extractedEmail.equals(email) && !isTokenExpired(token);
-    }
-
-    // ================= CHECK EXPIRY =================
-    private boolean isTokenExpired(String token) {
-        return extractAllClaims(token)
-                .getExpiration()
-                .before(new Date());
     }
 }
