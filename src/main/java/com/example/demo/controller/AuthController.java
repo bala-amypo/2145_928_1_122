@@ -16,29 +16,20 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // ================= REGISTER =================
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
+    // ================= LOGIN =================
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
 
-        // 🔹 generate JWT
-        String token = userService.login(
+        // ✅ JUST RETURN WHAT SERVICE GIVES
+        return userService.login(
                 request.getEmail(),
                 request.getPassword()
-        );
-
-        // 🔹 fetch user
-        User user = userService.findByEmail(request.getEmail());
-
-        // 🔹 RETURN RESPONSE BODY (THIS WAS MISSING / WRONG)
-        return new LoginResponse(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
         );
     }
 }
