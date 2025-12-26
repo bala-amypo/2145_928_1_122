@@ -9,6 +9,9 @@ public interface DiscountCodeService {
 
     DiscountCode getDiscountCode(Long id);
 
+    // 🔹 REQUIRED BY TEST
+    DiscountCode getDiscountCodeById(Long id);
+
     DiscountCode updateDiscountCode(Long id, DiscountCode discountCode);
 
     List<DiscountCode> getCodesForInfluencer(Long influencerId);

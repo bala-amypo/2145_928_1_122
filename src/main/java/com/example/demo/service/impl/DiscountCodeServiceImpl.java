@@ -10,39 +10,45 @@ import java.util.List;
 @Service
 public class DiscountCodeServiceImpl implements DiscountCodeService {
 
-    private final DiscountCodeRepository discountCodeRepository;
+    private final DiscountCodeRepository repository;
 
-    public DiscountCodeServiceImpl(DiscountCodeRepository discountCodeRepository) {
-        this.discountCodeRepository = discountCodeRepository;
+    public DiscountCodeServiceImpl(DiscountCodeRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public DiscountCode createDiscountCode(DiscountCode discountCode) {
-        return discountCodeRepository.save(discountCode);
+        return repository.save(discountCode);
     }
 
     @Override
     public DiscountCode getDiscountCode(Long id) {
-        return discountCodeRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
+    }
+
+    // 🔹 ALIAS FOR TEST
+    @Override
+    public DiscountCode getDiscountCodeById(Long id) {
+        return getDiscountCode(id);
     }
 
     @Override
     public DiscountCode updateDiscountCode(Long id, DiscountCode discountCode) {
-        DiscountCode existing = discountCodeRepository.findById(id).orElse(null);
+        DiscountCode existing = repository.findById(id).orElse(null);
         if (existing == null) return null;
 
         existing.setCodeValue(discountCode.getCodeValue());
         existing.setDiscountPercentage(discountCode.getDiscountPercentage());
-        return discountCodeRepository.save(existing);
+        return repository.save(existing);
     }
 
     @Override
     public List<DiscountCode> getCodesForInfluencer(Long influencerId) {
-        return discountCodeRepository.findByInfluencerId(influencerId);
+        return repository.findByInfluencerId(influencerId);
     }
 
     @Override
     public List<DiscountCode> getCodesForCampaign(Long campaignId) {
-        return discountCodeRepository.findByCampaignId(campaignId);
+        return repository.findByCampaignId(campaignId);
     }
 }
