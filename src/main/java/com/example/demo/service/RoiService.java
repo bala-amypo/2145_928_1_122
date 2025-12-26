@@ -5,9 +5,7 @@ import java.util.List;
 
 public interface RoiService {
 
-    RoiReport generateRoiForCode(Long codeId);
+    RoiReport generateReportForInfluencer(Long influencerId);
 
-    RoiReport getReportById(Long id);
-
-    List<RoiReport> getReportsForCampaign(Long campaignId);
+    List<RoiReport> getReportsForInfluencer(Long influencerId);
 }

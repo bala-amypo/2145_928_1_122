@@ -7,18 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/campaigns")
+@RequestMapping("/campaigns")
 public class CampaignController {
 
     private final CampaignService campaignService;
 
     public CampaignController(CampaignService campaignService) {
         this.campaignService = campaignService;
-    }
-
-    @PostMapping
-    public Campaign create(@RequestBody Campaign campaign) {
-        return campaignService.createCampaign(campaign);
     }
 
     @PutMapping("/{id}")
@@ -35,10 +30,5 @@ public class CampaignController {
     @GetMapping
     public List<Campaign> getAll() {
         return campaignService.getAllCampaigns();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deactivate(@PathVariable Long id) {
-        campaignService.deactivateCampaign(id);
     }
 }

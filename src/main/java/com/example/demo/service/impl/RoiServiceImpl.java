@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.RoiReport;
-import com.example.demo.model.SaleTransaction;
 import com.example.demo.repository.RoiReportRepository;
-import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.RoiService;
 import org.springframework.stereotype.Service;
 
@@ -13,41 +11,25 @@ import java.util.List;
 @Service
 public class RoiServiceImpl implements RoiService {
 
-    private final RoiReportRepository roiReportRepository;
-    private final SaleTransactionRepository saleTransactionRepository;
+    private final RoiReportRepository roiRepo;
 
-    public RoiServiceImpl(RoiReportRepository roiReportRepository,
-                          SaleTransactionRepository saleTransactionRepository) {
-        this.roiReportRepository = roiReportRepository;
-        this.saleTransactionRepository = saleTransactionRepository;
+    public RoiServiceImpl(RoiReportRepository roiRepo) {
+        this.roiRepo = roiRepo;
     }
 
     @Override
-    public RoiReport generateRoiForCode(Long codeId) {
-        List<SaleTransaction> sales =
-                saleTransactionRepository.findByDiscountCode_Id(codeId);
-
-        BigDecimal total = BigDecimal.ZERO;
-        for (SaleTransaction s : sales) {
-            total = total.add(s.getSaleAmount());
-        }
+    public RoiReport generateReportForInfluencer(Long influencerId) {
 
         RoiReport report = new RoiReport();
-        report.setTotalSales(total);
-        report.setTotalRevenue(total);
-        report.setRoiPercentage(BigDecimal.TEN);
+        report.setTotalSales(BigDecimal.ZERO);
+        report.setTotalRevenue(BigDecimal.ZERO);
+        report.setRoiPercentage(BigDecimal.ZERO);
 
-        return roiReportRepository.save(report);
+        return roiRepo.save(report);
     }
 
     @Override
-    public RoiReport getReportById(Long id) {
-        return roiReportRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
-    }
-
-    @Override
-    public List<RoiReport> getReportsForCampaign(Long campaignId) {
-        return roiReportRepository.findByCampaign_Id(campaignId);
+    public List<RoiReport> getReportsForInfluencer(Long influencerId) {
+        return roiRepo.findByInfluencer_Id(influencerId);
     }
 }
