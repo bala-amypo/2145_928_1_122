@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.LoginResponse;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,33 +20,32 @@ public class AuthController {
 
     // ================= REGISTER =================
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
-
-        User user = new User();
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
-
-        return userService.register(user);
+    public ResponseEntity<User> register(@RequestBody User user) {
+        return ResponseEntity.ok(userService.register(user));
     }
 
     // ================= LOGIN =================
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody Map<String, String> request
+    ) {
+        String email = request.get("email");
+        String password = request.get("password");
 
-        String token = userService.login(
-                request.getEmail(),
-                request.getPassword()
-        );
+        // ✅ get token
+        String token = userService.login(email, password);
 
-        User user = userService.findByEmail(request.getEmail());
+        // ✅ get user details
+        User user = userService.findByEmail(email);
 
-        return new LoginResponse(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
+        // ✅ return token in body
+        return ResponseEntity.ok(
+                new LoginResponse(
+                        token,
+                        user.getId(),
+                        user.getEmail(),
+                        user.getRole()
+                )
         );
     }
 }
