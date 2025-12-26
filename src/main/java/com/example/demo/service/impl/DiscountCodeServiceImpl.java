@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DiscountCode;
 import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.service.DiscountCodeService;
@@ -18,37 +17,32 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public DiscountCode getDiscountCodeById(Long id) {
-        return discountCodeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Discount code not found"));
+    public DiscountCode createDiscountCode(DiscountCode discountCode) {
+        return discountCodeRepository.save(discountCode);
     }
 
     @Override
-    public DiscountCode updateDiscountCode(Long id, DiscountCode updated) {
+    public DiscountCode getDiscountCode(Long id) {
+        return discountCodeRepository.findById(id).orElse(null);
+    }
 
-        if (updated.getDiscountPercentage() < 0 ||
-                updated.getDiscountPercentage() > 100) {
-            throw new IllegalArgumentException("Invalid discount percentage");
-        }
+    @Override
+    public DiscountCode updateDiscountCode(Long id, DiscountCode discountCode) {
+        DiscountCode existing = discountCodeRepository.findById(id).orElse(null);
+        if (existing == null) return null;
 
-        DiscountCode existing = discountCodeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Discount code not found"));
-
-        existing.setCode(updated.getCode());
-        existing.setDiscountPercentage(updated.getDiscountPercentage());
-
+        existing.setCodeValue(discountCode.getCodeValue());
+        existing.setDiscountPercentage(discountCode.getDiscountPercentage());
         return discountCodeRepository.save(existing);
     }
 
     @Override
     public List<DiscountCode> getCodesForInfluencer(Long influencerId) {
-        return discountCodeRepository.findByInfluencer_Id(influencerId);
+        return discountCodeRepository.findByInfluencerId(influencerId);
     }
 
     @Override
     public List<DiscountCode> getCodesForCampaign(Long campaignId) {
-        return discountCodeRepository.findByCampaign_Id(campaignId);
+        return discountCodeRepository.findByCampaignId(campaignId);
     }
 }
