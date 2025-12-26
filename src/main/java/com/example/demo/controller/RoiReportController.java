@@ -16,18 +16,21 @@ public class RoiReportController {
         this.roiService = roiService;
     }
 
+    // 🔹 Accept STRING → convert to Long (TEST FIX)
     @PostMapping("/code/{codeId}")
-    public RoiReport generateForCode(@PathVariable Long codeId) {
-        return roiService.generateReportForCode(codeId);
+    public RoiReport generateForCode(@PathVariable String codeId) {
+        return roiService.generateReportForCode(Long.valueOf(codeId));
     }
 
+    // 🔹 Accept STRING → convert to Long (TEST FIX)
     @GetMapping("/influencer/{influencerId}")
-    public List<RoiReport> getForInfluencer(@PathVariable Long influencerId) {
-        return roiService.getReportsForInfluencer(influencerId);
+    public List<RoiReport> getForInfluencer(@PathVariable String influencerId) {
+        return roiService.getReportsForInfluencer(Long.valueOf(influencerId));
     }
 
+    // 🔹 Accept STRING → convert to Long (TEST FIX)
     @GetMapping("/{id}")
-    public RoiReport getById(@PathVariable Long id) {
-        return roiService.getReportById(id);
+    public RoiReport getById(@PathVariable String id) {
+        return roiService.getReportById(Long.valueOf(id));
     }
 }
