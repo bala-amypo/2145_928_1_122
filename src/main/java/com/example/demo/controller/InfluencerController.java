@@ -2,12 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Influencer;
 import com.example.demo.service.InfluencerService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@RestController
-@RequestMapping("/influencers")
 public class InfluencerController {
 
     private final InfluencerService influencerService;
@@ -16,18 +12,15 @@ public class InfluencerController {
         this.influencerService = influencerService;
     }
 
-    @PostMapping
-    public Influencer create(@RequestBody Influencer influencer) {
+    public Influencer createInfluencer(Influencer influencer) {
         return influencerService.createInfluencer(influencer);
     }
 
-    @GetMapping
-    public List<Influencer> getAll() {
+    public List<Influencer> getAllInfluencers() {
         return influencerService.getAllInfluencers();
     }
 
-    @GetMapping("/{id}")
-    public Influencer getById(@PathVariable Long id) {
+    public Influencer getInfluencer(long id) {
         return influencerService.getInfluencerById(id);
     }
 }

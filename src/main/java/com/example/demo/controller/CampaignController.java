@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/campaigns")
+
 public class CampaignController {
 
     private final CampaignService campaignService;
@@ -16,19 +17,15 @@ public class CampaignController {
         this.campaignService = campaignService;
     }
 
-    @PutMapping("/{id}")
-    public Campaign update(@PathVariable Long id,
-                           @RequestBody Campaign campaign) {
+    public Campaign updateCampaign(long id, Campaign campaign) {
         return campaignService.updateCampaign(id, campaign);
     }
 
-    @GetMapping("/{id}")
-    public Campaign getById(@PathVariable Long id) {
+    public Campaign getCampaign(long id) {
         return campaignService.getCampaignById(id);
     }
 
-    @GetMapping
-    public List<Campaign> getAll() {
+    public List<Campaign> getAllCampaigns() {
         return campaignService.getAllCampaigns();
     }
 }
