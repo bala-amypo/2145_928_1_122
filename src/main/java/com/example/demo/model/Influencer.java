@@ -1,47 +1,15 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-
-@Entity
 public class Influencer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private boolean active;
 
-    private String name;          // 🔹 REQUIRED BY TEST
-    private String socialHandle;
-    private boolean active = true;
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public boolean isActive() { return active; }
 
-    // ---------- getters & setters ----------
-
-    public Long getId() {
-        return id;
-    }
-
-    // REQUIRED
-    public String getName() {
-        return name;
-    }
-
-    // REQUIRED
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSocialHandle() {
-        return socialHandle;
-    }
-
-    public void setSocialHandle(String socialHandle) {
-        this.socialHandle = socialHandle;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setActive(boolean active) { this.active = active; }
 }
