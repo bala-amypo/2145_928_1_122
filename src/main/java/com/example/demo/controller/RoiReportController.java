@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/roi")
+@RequestMapping("/roi")
 public class RoiReportController {
 
     private final RoiService roiService;
@@ -16,18 +16,14 @@ public class RoiReportController {
         this.roiService = roiService;
     }
 
-    @PostMapping("/generate/{codeId}")
-    public RoiReport generate(@PathVariable Long codeId) {
-        return roiService.generateRoiForCode(codeId);
+    @PostMapping("/influencer/{influencerId}")
+    public RoiReport generate(@PathVariable Long influencerId) {
+        return roiService.generateReportForInfluencer(influencerId);
     }
 
-    @GetMapping("/{id}")
-    public RoiReport getById(@PathVariable Long id) {
-        return roiService.getReportById(id);
-    }
-
-    @GetMapping("/campaign/{campaignId}")
-    public List<RoiReport> getByCampaign(@PathVariable Long campaignId) {
-        return roiService.getReportsForCampaign(campaignId);
+    @GetMapping("/influencer/{influencerId}")
+    public List<RoiReport> getForInfluencer(
+            @PathVariable Long influencerId) {
+        return roiService.getReportsForInfluencer(influencerId);
     }
 }

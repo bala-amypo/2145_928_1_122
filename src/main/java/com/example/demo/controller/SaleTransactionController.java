@@ -7,37 +7,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sales")
+@RequestMapping("/sales")
 public class SaleTransactionController {
 
-    private final SaleTransactionService saleTransactionService;
+    private final SaleTransactionService saleService;
 
-    public SaleTransactionController(SaleTransactionService saleTransactionService) {
-        this.saleTransactionService = saleTransactionService;
+    public SaleTransactionController(SaleTransactionService saleService) {
+        this.saleService = saleService;
     }
 
     @PostMapping
-    public SaleTransaction create(@RequestBody SaleTransaction transaction) {
-        return saleTransactionService.logTransaction(transaction);
-    }
-
-    @GetMapping("/{id}")
-    public SaleTransaction getById(@PathVariable Long id) {
-        return saleTransactionService.getTransactionById(id);
+    public SaleTransaction create(@RequestBody SaleTransaction tx) {
+        return saleService.createSale(tx);
     }
 
     @GetMapping("/code/{codeId}")
     public List<SaleTransaction> getByCode(@PathVariable Long codeId) {
-        return saleTransactionService.getSalesForCode(codeId);
+        return saleService.getSalesForCode(codeId);
     }
 
     @GetMapping("/influencer/{influencerId}")
-    public List<SaleTransaction> getByInfluencer(@PathVariable Long influencerId) {
-        return saleTransactionService.getSalesForInfluencer(influencerId);
+    public List<SaleTransaction> getByInfluencer(
+            @PathVariable Long influencerId) {
+        return saleService.getSalesForInfluencer(influencerId);
     }
 
     @GetMapping("/campaign/{campaignId}")
-    public List<SaleTransaction> getByCampaign(@PathVariable Long campaignId) {
-        return saleTransactionService.getSalesForCampaign(campaignId);
+    public List<SaleTransaction> getByCampaign(
+            @PathVariable Long campaignId) {
+        return saleService.getSalesForCampaign(campaignId);
     }
 }
