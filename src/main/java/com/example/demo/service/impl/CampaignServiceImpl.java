@@ -1,12 +1,10 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Campaign;
 import com.example.demo.repository.CampaignRepository;
 import com.example.demo.service.CampaignService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,31 +17,30 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    public Campaign createCampaign(Campaign campaign) {
+        return campaignRepository.save(campaign);
+    }
+
+    @Override
     public Campaign updateCampaign(Long id, Campaign campaign) {
-
-        Campaign existing = campaignRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Campaign not found"));
-
-        LocalDate start = campaign.getStartDate();
-        LocalDate end = campaign.getEndDate();
-
-        if (start != null && end != null && end.isBefore(start)) {
-            throw new IllegalArgumentException("Invalid date range");
-        }
+        Campaign existing = campaignRepository.findById(id).orElse(null);
+        if (existing == null) return null;
 
         existing.setCampaignName(campaign.getCampaignName());
-        existing.setStartDate(start);
-        existing.setEndDate(end);
+        existing.setStartDate(campaign.getStartDate());
+        existing.setEndDate(campaign.getEndDate());
 
         return campaignRepository.save(existing);
     }
 
     @Override
+    public Campaign getCampaign(Long id) {
+        return campaignRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Campaign getCampaignById(Long id) {
-        return campaignRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Campaign not found"));
+        return campaignRepository.findById(id).orElse(null);
     }
 
     @Override
