@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Influencer;
 import com.example.demo.service.InfluencerService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/influencers")
 public class InfluencerController {
 
     private final InfluencerService influencerService;
@@ -13,15 +17,18 @@ public class InfluencerController {
         this.influencerService = influencerService;
     }
 
-    public Influencer createInfluencer(Influencer influencer) {
-        return influencerService.createInfluencer(influencer);
+    @PostMapping
+    public ResponseEntity<Influencer> createInfluencer(@RequestBody Influencer influencer) {
+        return ResponseEntity.ok(influencerService.createInfluencer(influencer));
     }
 
-    public List<Influencer> getAllInfluencers() {
-        return influencerService.getAllInfluencers();
+    @GetMapping
+    public ResponseEntity<List<Influencer>> getAllInfluencers() {
+        return ResponseEntity.ok(influencerService.getAllInfluencers());
     }
 
-    public Influencer getInfluencer(long id) {
-        return influencerService.getInfluencerById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Influencer> getInfluencer(@PathVariable Long id) {
+        return ResponseEntity.ok(influencerService.getInfluencer(id));
     }
 }

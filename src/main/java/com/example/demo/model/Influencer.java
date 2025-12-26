@@ -9,6 +9,7 @@ public class Influencer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;          // 🔹 REQUIRED BY TEST
     private String socialHandle;
     private boolean active = true;
 
@@ -16,6 +17,16 @@ public class Influencer {
 
     public Long getId() {
         return id;
+    }
+
+    // REQUIRED
+    public String getName() {
+        return name;
+    }
+
+    // REQUIRED
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSocialHandle() {

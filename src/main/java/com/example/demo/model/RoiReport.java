@@ -13,11 +13,7 @@ public class RoiReport {
     private BigDecimal totalSales;
     private BigDecimal totalRevenue;
     private BigDecimal roiPercentage;
-
     private Integer totalTransactions;
-
-    @ManyToOne
-    private DiscountCode discountCode;
 
     // ---------- getters & setters ----------
 
@@ -25,8 +21,14 @@ public class RoiReport {
         return totalSales;
     }
 
+    // 🔹 Accept BigDecimal
     public void setTotalSales(BigDecimal totalSales) {
         this.totalSales = totalSales;
+    }
+
+    // 🔹 Accept double (TEST USES DOUBLE)
+    public void setTotalSales(double totalSales) {
+        this.totalSales = BigDecimal.valueOf(totalSales);
     }
 
     public BigDecimal getTotalRevenue() {
@@ -51,13 +53,5 @@ public class RoiReport {
 
     public void setTotalTransactions(Integer totalTransactions) {
         this.totalTransactions = totalTransactions;
-    }
-
-    public DiscountCode getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(DiscountCode discountCode) {
-        this.discountCode = discountCode;
     }
 }
