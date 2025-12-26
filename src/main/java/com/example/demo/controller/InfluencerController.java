@@ -22,13 +22,13 @@ public class InfluencerController {
         return ResponseEntity.ok(influencerService.createInfluencer(influencer));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Influencer> getInfluencer(@PathVariable Long id) {
+        return ResponseEntity.ok(influencerService.getInfluencerById(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<Influencer>> getAllInfluencers() {
         return ResponseEntity.ok(influencerService.getAllInfluencers());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Influencer> getInfluencer(@PathVariable Long id) {
-        return ResponseEntity.ok(influencerService.getInfluencer(id));
     }
 }
