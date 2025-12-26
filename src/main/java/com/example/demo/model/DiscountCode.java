@@ -18,15 +18,22 @@ public class DiscountCode {
         return id;
     }
 
-    public String getCode() {
+    // Used by tests
+    public String getCodeValue() {
         return code;
     }
 
+    // Used by tests
     public void setCodeValue(String code) {
         this.code = code;
     }
 
-    public String getCodeValue() {
+    // Used by service layer (FIX for your error)
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
         return code;
     }
 
