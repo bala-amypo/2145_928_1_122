@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SaleTransaction;
 import com.example.demo.service.SaleTransactionService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/sales")
 public class SaleTransactionController {
 
     private final SaleTransactionService saleService;
@@ -13,11 +17,13 @@ public class SaleTransactionController {
         this.saleService = saleService;
     }
 
-    public SaleTransaction createSale(SaleTransaction tx) {
-        return saleService.createSale(tx);
+    @PostMapping
+    public ResponseEntity<SaleTransaction> createSale(@RequestBody SaleTransaction tx) {
+        return ResponseEntity.ok(saleService.createSale(tx));
     }
 
-    public List<SaleTransaction> getSalesForCode(long codeId) {
-        return saleService.getSalesForCode(codeId);
+    @GetMapping("/code/{codeId}")
+    public ResponseEntity<List<SaleTransaction>> getSalesForCode(@PathVariable Long codeId) {
+        return ResponseEntity.ok(saleService.getSalesForCode(codeId));
     }
 }

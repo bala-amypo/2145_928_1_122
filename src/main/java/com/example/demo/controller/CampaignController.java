@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Campaign;
 import com.example.demo.service.CampaignService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/campaigns")
 public class CampaignController {
 
     private final CampaignService campaignService;
@@ -13,15 +17,24 @@ public class CampaignController {
         this.campaignService = campaignService;
     }
 
-    public Campaign updateCampaign(long id, Campaign campaign) {
-        return campaignService.updateCampaign(id, campaign);
+    @PostMapping
+    public ResponseEntity<Campaign> createCampaign(@RequestBody Campaign campaign) {
+        return ResponseEntity.ok(campaignService.createCampaign(campaign));
     }
 
-    public Campaign getCampaign(long id) {
-        return campaignService.getCampaignById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Campaign> updateCampaign(@PathVariable Long id,
+                                                   @RequestBody Campaign campaign) {
+        return ResponseEntity.ok(campaignService.updateCampaign(id, campaign));
     }
 
-    public List<Campaign> getAllCampaigns() {
-        return campaignService.getAllCampaigns();
+    @GetMapping("/{id}")
+    public ResponseEntity<Campaign> getCampaign(@PathVariable Long id) {
+        return ResponseEntity.ok(campaignService.getCampaign(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Campaign>> getAllCampaigns() {
+        return ResponseEntity.ok(campaignService.getAllCampaigns());
     }
 }

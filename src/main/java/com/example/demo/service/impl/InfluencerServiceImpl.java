@@ -26,9 +26,14 @@ public class InfluencerServiceImpl implements InfluencerService {
         return influencerRepository.findAll();
     }
 
-    // 🔹 ADD THIS
     @Override
     public Influencer getInfluencer(Long id) {
+        return influencerRepository.findById(id).orElse(null);
+    }
+
+    // 🔹 REQUIRED BY TEST
+    @Override
+    public Influencer getInfluencerById(Long id) {
         return influencerRepository.findById(id).orElse(null);
     }
 }
