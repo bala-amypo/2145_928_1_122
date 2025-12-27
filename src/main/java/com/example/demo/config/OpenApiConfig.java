@@ -36,7 +36,9 @@ public class OpenApiConfig {
                         new Server()
                                 .url("https://9159.408procr.amypo.ai/")
                                 .description("Production Server"),
-
+                        new Server()
+                                .url("http://localhost:9001")
+                                .description("Local Development Server")
                 ));
     }
 }
