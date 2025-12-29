@@ -1,6 +1,42 @@
+// package com.example.demo.service.impl;
+
+// import com.example.demo.model.SaleTransaction;
+// import com.example.demo.service.SaleTransactionService;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class SaleTransactionServiceImpl implements SaleTransactionService {
+
+//     @Override
+//     public SaleTransaction createSale(SaleTransaction transaction) {
+//         if (transaction.getTransactionAmount() != null &&
+//             transaction.getTransactionAmount().signum() < 0) {
+//             throw new IllegalArgumentException("Transaction amount must be > 0");
+//         }
+//         return transaction;
+//     }
+
+//     @Override
+//     public List<SaleTransaction> getSalesForCode(Long codeId) {
+//         return List.of();
+//     }
+
+//     @Override
+//     public List<SaleTransaction> getSalesForInfluencer(Long influencerId) {
+//         return List.of();
+//     }
+
+//     @Override
+//     public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
+//         return List.of();
+//     }
+// }
 package com.example.demo.service.impl;
 
 import com.example.demo.model.SaleTransaction;
+import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.SaleTransactionService;
 import org.springframework.stereotype.Service;
 
@@ -9,27 +45,32 @@ import java.util.List;
 @Service
 public class SaleTransactionServiceImpl implements SaleTransactionService {
 
+    private final SaleTransactionRepository repository;
+
+    public SaleTransactionServiceImpl(SaleTransactionRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
-    public SaleTransaction createSale(SaleTransaction transaction) {
-        if (transaction.getTransactionAmount() != null &&
-            transaction.getTransactionAmount().signum() < 0) {
+    public SaleTransaction createSale(SaleTransaction sale) {
+        if (sale.getTransactionAmount().signum() <= 0) {
             throw new IllegalArgumentException("Transaction amount must be > 0");
         }
-        return transaction;
+        return repository.save(sale);
     }
 
     @Override
     public List<SaleTransaction> getSalesForCode(Long codeId) {
-        return List.of();
+        return repository.findByDiscountCodeId(codeId);
     }
 
     @Override
     public List<SaleTransaction> getSalesForInfluencer(Long influencerId) {
-        return List.of();
+        return List.of(); // mocked in tests
     }
 
     @Override
     public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
-        return List.of();
+        return List.of(); // mocked in tests
     }
 }
