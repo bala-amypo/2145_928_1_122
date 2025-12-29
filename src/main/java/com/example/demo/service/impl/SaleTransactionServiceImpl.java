@@ -33,6 +33,7 @@
 //         return List.of();
 //     }
 // }
+
 package com.example.demo.service.impl;
 
 import com.example.demo.model.SaleTransaction;

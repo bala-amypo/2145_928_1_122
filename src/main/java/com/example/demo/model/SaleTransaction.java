@@ -20,6 +20,8 @@
 //     public void setDiscountCode(DiscountCode discountCode) { this.discountCode = discountCode; }
 //     public void setCustomerId(Long customerId) { this.customerId = customerId; }
 // }
+
+
 package com.example.demo.model;
 
 import jakarta.persistence.*;
@@ -34,22 +36,18 @@ public class SaleTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Required by tests
     @Column(nullable = false)
     private BigDecimal transactionAmount;
 
-    // Required by tests
     private Long customerId;
 
-    // Required by tests
     private Timestamp transactionDate;
 
-    // Required by tests (association)
     @ManyToOne
     @JoinColumn(name = "discount_code_id")
     private DiscountCode discountCode;
 
-    // ---------- GETTERS ----------
+    // ---------- getters ----------
 
     public Long getId() {
         return id;
@@ -71,7 +69,7 @@ public class SaleTransaction {
         return discountCode;
     }
 
-    // ---------- SETTERS ----------
+    // ---------- setters ----------
 
     public void setTransactionAmount(BigDecimal transactionAmount) {
         this.transactionAmount = transactionAmount;
