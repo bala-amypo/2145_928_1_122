@@ -55,7 +55,6 @@ public class SwaggerConfig {
                         .version("1.0")
                         .description("Secured backend for inventory balancing")
                 )
-                // ✅ PORT KEPT (as requested)
                 .servers(List.of(
                         new Server()
                                 .url("https://9159.408procr.amypo.ai/")
